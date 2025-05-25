@@ -193,7 +193,7 @@ function waGetInquirer() {
     elif [ -d "$USER_SOURCE_PATH" ] ; then
         INQUIRER=$USER_SOURCE_PATH/$INQUIRER_PATH
     else
-        INQUIRER="/tmp/waInquirer.sh"
+        INQUIRER="/install/Inquirer.sh"
         rm -f "$INQUIRER"
 
         curl -o "$INQUIRER" "https://github.com/Nathan-Busse/winux/main/install/inquirer.sh"
