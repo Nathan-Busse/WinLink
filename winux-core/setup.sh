@@ -193,10 +193,10 @@ function waGetInquirer() {
     elif [ -d "$USER_SOURCE_PATH" ] ; then
         INQUIRER=$USER_SOURCE_PATH/$INQUIRER_PATH
     else
-        INQUIRER="/install/Inquirer.sh"
+        INQUIRER="/tmp/waInquirer.sh"
         rm -f "$INQUIRER"
 
-        curl -o "$INQUIRER" "https://github.com/Nathan-Busse/winux/main/install/inquirer.sh"
+        curl -o "$INQUIRER" "https://raw.githubusercontent.com/Nathan-Busse/winux/main/install/inquirer.sh"
     fi
 
     # shellcheck source=/dev/null # Exclude this file from being checked by ShellCheck.
@@ -941,7 +941,7 @@ function waCheckContainerRunning() {
         # Display the suggested action(s).
         echo "--------------------------------------------------------------------------------"
         echo "Please ensure Windows is powered on:"
-        echo -e "${COMMAND_TEXT}${COMPOSE_COMMAND} --file ~/winux/compose.yaml start${CLEAR_TEXT}"
+        echo -e "${COMMAND_TEXT}${COMPOSE_COMMAND} --file ~/.config/winux/compose.yaml start${CLEAR_TEXT}"
         echo "--------------------------------------------------------------------------------"
 
         # Terminate the script.
