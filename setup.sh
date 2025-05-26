@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # shellcheck disable=SC2034           # Silence warnings regarding unused variables globally.
 
 ### GLOBAL CONSTANTS ###
