@@ -72,7 +72,7 @@ readonly CONFIG_PATH="${HOME}/winux/winux.conf" # UNIX path to the winux configu
 readonly INQUIRER_PATH=".winux/install/inquirer.sh" # UNIX path to the 'inquirer' script, which is used to produce selection menus.
 
 # REMOTE DESKTOP CONFIGURATION
-readonly VM_NAME="RDPWindows"  # Name of the Windows VM (FOR 'libvirt' ONLY).
+readonly VM_NAME="winux"  # Name of the Windows VM (FOR 'libvirt' ONLY).
 readonly RDP_PORT=3389         # Port used for RDP on Windows.
 readonly DOCKER_IP="127.0.0.1" # Localhost.
 
@@ -84,8 +84,8 @@ OPT_UNINSTALL=0 # Set to '1' if the user specifies '--uninstall'.
 OPT_AOSA=0      # Set to '1' if the user specifies '--setupAllOfficiallySupportedApps'.
 
 # winux CONFIGURATION FILE
-RDP_USER=""        # Imported variable.
-RDP_PASS=""        # Imported variable.
+RDP_USER="admin"        # Imported variable.
+RDP_PASS="admin"        # Imported variable.
 RDP_DOMAIN=""      # Imported variable.
 RDP_IP=""          # Imported variable.
 WAFLAVOR="docker"  # Imported variable.
@@ -936,7 +936,7 @@ function waCheckContainerRunning() {
         # Display the suggested action(s).
         echo "--------------------------------------------------------------------------------"
         echo "Please ensure Windows is powered on:"
-        echo -e "${COMMAND_TEXT}${COMPOSE_COMMAND} --file ~/.config/winux/compose.yaml start${CLEAR_TEXT}"
+        echo -e "${COMMAND_TEXT}${COMPOSE_COMMAND} --file ./compose.yaml up${CLEAR_TEXT}"
         echo "--------------------------------------------------------------------------------"
 
         # Terminate the script.
