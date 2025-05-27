@@ -69,7 +69,7 @@ readonly TEST_PATH_WIN="${USER_APPDATA_PATH_WIN}\\FreeRDP_Connection_Test" # WIN
 # 'winux Configuration File'
 readonly CONFIG_PATH="${HOME}/winux/winux.conf" # UNIX path to the winux configuration file.
 # 'Inquirer Bash Script'
-readonly INQUIRER_PATH="./install/inquirer.sh" # UNIX path to the 'inquirer' script, which is used to produce selection menus.
+readonly INQUIRER_PATH=".winux/install/inquirer.sh" # UNIX path to the 'inquirer' script, which is used to produce selection menus.
 
 # REMOTE DESKTOP CONFIGURATION
 readonly VM_NAME="RDPWindows"  # Name of the Windows VM (FOR 'libvirt' ONLY).
@@ -184,21 +184,17 @@ function waGetSourceCode() {
 
 # Name: 'waGetInquirer'
 # Role: Loads the inquirer script, even if the source isn't cloned yet
+# ...existing code...
 function waGetInquirer() {
-    local INQUIRER=$INQUIRER_PATH
+    local INQUIRER="./install/inquirer.sh"
 
-    if [ -d "$SYS_SOURCE_PATH" ]; then
-        INQUIRER=$SYS_SOURCE_PATH/$INQUIRER_PATH
-    elif [ -d "$USER_SOURCE_PATH" ] ; then
-        INQUIRER=$USER_SOURCE_PATH/$INQUIRER_PATH
-    else
-        INQUIRER="/tmp/waInquirer.sh"
-        rm -f "$INQUIRER"
-
-        curl -o "$INQUIRER" "https://raw.githubusercontent.com/Nathan-Busse/winux/main/install/inquirer.sh"
+    if [ ! -f "$INQUIRER" ]; then
+        echo -e "${ERROR_TEXT}ERROR:${CLEAR_TEXT} ${BOLD_TEXT}Missing inquirer.sh.${CLEAR_TEXT}"
+        echo -e "${INFO_TEXT}Could not find ${INQUIRER}.${CLEAR_TEXT}"
+        exit 1
     fi
 
-    # shellcheck source=/dev/null # Exclude this file from being checked by ShellCheck.
+    # shellcheck source=/dev/null
     source "$INQUIRER"
 }
 
@@ -249,7 +245,7 @@ function waCheckInput() {
     else
         # Install vs. uninstall?
         OPTIONS=("Install" "Uninstall")
-        inqMenu "Install or uninstall winux?" OPTIONS SELECTED_OPTION
+        menuFromArr SELECTED_OPTION "Install or uninstall winux?" "${OPTIONS[@]}"
 
         # Set flags.
         if [[ $SELECTED_OPTION == "Uninstall" ]]; then
@@ -258,7 +254,7 @@ function waCheckInput() {
 
         # User vs. system?
         OPTIONS=("Current User" "System")
-        inqMenu "Configure winux for the current user '$(whoami)' or the whole system?" OPTIONS SELECTED_OPTION
+        menuFromArr SELECTED_OPTION "Configure winux for the current user '$(whoami)' or the whole system?" "${OPTIONS[@]}"
 
         # Set flags.
         if [[ $SELECTED_OPTION == "Current User" ]]; then
@@ -270,7 +266,7 @@ function waCheckInput() {
         # Automatic vs. manual?
         if [ "$OPT_UNINSTALL" -eq 0 ]; then
             OPTIONS=("Manual (Default)" "Automatic")
-            inqMenu "Automatically install supported applications or choose manually?" OPTIONS SELECTED_OPTION
+            menuFromArr SELECTED_OPTION "Automatically install supported applications or choose manually?" "${OPTIONS[@]}"
 
             # Set flags.
             if [[ $SELECTED_OPTION == "Automatic" ]]; then
@@ -1396,7 +1392,7 @@ function waConfigureApps() {
         "Choose specific officially supported applications to set up"
         "Skip setting up any officially supported applications"
     )
-    inqMenu "How would you like to handle officially supported applications?" OPTIONS APP_INSTALL
+    menuFromArr "How would you like to handle officially supported applications?" OPTIONS APP_INSTALL
 
     # Remove unselected officially supported applications from the 'install' file.
     if [[ $APP_INSTALL == "Choose specific officially supported applications to set up" ]]; then
@@ -1481,7 +1477,7 @@ function waConfigureDetectedApps() {
             "Select which applications to set up"
             "Do not set up any applications"
         )
-        inqMenu "How would you like to handle other detected applications?" OPTIONS APP_INSTALL
+        menuFromArr "How would you like to handle other detected applications?" OPTIONS APP_INSTALL
 
         # Store selected detected applications.
         if [[ $APP_INSTALL == "Select which applications to set up" ]]; then
@@ -1571,6 +1567,8 @@ function waInstall() {
     if [[ -n $RDP_FLAGS ]]; then
         FREERDP_COMMAND="${FREERDP_COMMAND} ${RDP_FLAGS}"
     fi
+
+   
 
     # If using 'docker' or 'podman', set RDP_IP to localhost.
     if [ "$WAFLAVOR" = "docker" ] || [ "$WAFLAVOR" = "podman" ]; then
@@ -1743,7 +1741,7 @@ function waUninstall() {
 echo -e "${BOLD_TEXT}\
 ################################################################################
 #                                                                              #
-#                            winux Install Wizard                            #
+#                            winux Install Wizard                              #
 #                                                                              #
 ################################################################################
 ${CLEAR_TEXT}"
