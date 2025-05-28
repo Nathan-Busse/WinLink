@@ -1,3 +1,8 @@
+# Copyright (c) 2024 Fmstrat
+# All rights reserved.
+#
+# SPDX-License-Identifier: Proprietary
+
 # GNOME shortcut name
 NAME="Creative Cloud"
 
@@ -8,7 +13,10 @@ FULL_NAME="Adobe Creative Cloud"
 WIN_EXECUTABLE="C:\Program Files\Adobe\Adobe Creative Cloud\ACC\Creative Cloud.exe"
 
 # GNOME categories
-CATEGORIES="winux;Adobe"
+CATEGORIES="Winux;Adobe"
 
 # GNOME mimetypes
 MIME_TYPES=""
+
+# System Icon
+ICON="AdobeUpdate"

@@ -1,3 +1,8 @@
+# Copyright (c) 2024 Fmstrat
+# All rights reserved.
+#
+# SPDX-License-Identifier: Proprietary
+
 # GNOME shortcut name
 NAME="Cmd"
 
@@ -8,7 +13,10 @@ FULL_NAME="Command Prompt"
 WIN_EXECUTABLE="C:\Windows\System32\cmd.exe"
 
 # GNOME categories
-CATEGORIES="winux;Windows"
+CATEGORIES="Winux;Windows"
 
 # GNOME mimetypes
 MIME_TYPES=""
+
+# System Icon
+ICON="Terminal"

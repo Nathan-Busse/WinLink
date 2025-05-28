@@ -5,10 +5,10 @@ NAME="Project"
 FULL_NAME="Microsoft Project"
 
 # The executable inside windows
-WIN_EXECUTABLE="C:\Program Files\Microsoft Office\Office16\WINPROJ.EXE"
+WIN_EXECUTABLE="C:\Program Files\Microsoft Office\root\Office16\WINPROJ.EXE"
 
 # GNOME categories
-CATEGORIES="winux;Office"
+CATEGORIES="Winux;Office"
 
 # GNOME mimetypes
-MIME_TYPES="application/msproj;application/msproject;application/x-msproject;application/x-ms-project;application/vnd.ms-project;"
+MIME_TYPES="application/vnd.ms-project;"

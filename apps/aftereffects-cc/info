@@ -1,3 +1,8 @@
+# Copyright (c) 2024 Fmstrat
+# All rights reserved.
+#
+# SPDX-License-Identifier: Proprietary
+
 # GNOME shortcut name
 NAME="After Effects CC"
 
@@ -8,7 +13,10 @@ FULL_NAME="Adobe After Effects CC"
 WIN_EXECUTABLE="C:\Program Files\Adobe\Adobe After Effects 2020\Support Files\AfterFX.exe"
 
 # GNOME categories
-CATEGORIES="winux;Adobe"
+CATEGORIES="Winux;Adobe"
 
 # GNOME mimetypes
 MIME_TYPES="application/vnd.adobe.aftereffects.project;application/vnd.adobe.aftereffects.template;"
+
+# System Icon
+ICON="AdobeAfterEffect"

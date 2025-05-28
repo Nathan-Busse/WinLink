@@ -1,3 +1,8 @@
+# Copyright (c) 2024 Fmstrat
+# All rights reserved.
+#
+# SPDX-License-Identifier: Proprietary
+
 # GNOME shortcut name
 NAME="InDesign CC"
 
@@ -8,7 +13,10 @@ FULL_NAME="Adobe InDesign CC"
 WIN_EXECUTABLE="C:\Program Files\Adobe\Adobe InDesign 2021\InDesign.exe"
 
 # GNOME categories
-CATEGORIES="winux;Adobe"
+CATEGORIES="Winux;Adobe"
 
 # GNOME mimetypes
 MIME_TYPES="application/x-adobe-indesign-interchange;application/x-adobe-indesign;"
+
+# System Icon
+ICON="AdobeIndesign"

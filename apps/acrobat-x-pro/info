@@ -1,3 +1,8 @@
+# Copyright (c) 2024 Fmstrat
+# All rights reserved.
+#
+# SPDX-License-Identifier: Proprietary
+
 # GNOME shortcut name
 NAME="Acrobat X Pro"
 
@@ -8,7 +13,7 @@ FULL_NAME="Acrobat X Pro"
 WIN_EXECUTABLE="C:\Program Files (x86)\Adobe\Acrobat 10.0\Acrobat\Acrobat.exe"
 
 # GNOME categories
-CATEGORIES="winux;Documents"
+CATEGORIES="Winux;Documents"
 
 # GNOME mimetypes
 MIME_TYPES="application/pdf;"

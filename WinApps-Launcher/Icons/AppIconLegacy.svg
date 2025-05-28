@@ -1,0 +1,7 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 768" width="768" height="768">
+	<title>AppIconLegacy</title>
+	<path id="Top Left (Red)" fill="#ee4135" d="m0 0h364v364h-364z"/>
+	<path id="Top Right (Green)" fill="#8dc740" d="m404 0h364v364h-364z"/>
+	<path id="Bottom Left (Blue)" fill="#1774bb" d="m0 404h364v364h-364z"/>
+	<path id="Bottom Right (Yellow)" fill="#fcb041" d="m404 404h364v364h-364z"/>
+</svg>

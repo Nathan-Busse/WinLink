@@ -1,3 +1,8 @@
+# Copyright (c) 2024 Fmstrat
+# All rights reserved.
+#
+# SPDX-License-Identifier: Proprietary
+
 # GNOME shortcut name
 NAME="Publisher"
 
@@ -8,7 +13,7 @@ FULL_NAME="Microsoft Publisher"
 WIN_EXECUTABLE="C:\Program Files (x86)\Microsoft Office\root\Office16\MSPUB.EXE"
 
 # GNOME categories
-CATEGORIES="winux;Office"
+CATEGORIES="Winux;Office"
 
 # GNOME mimetypes
 MIME_TYPES="application/vnd.ms-publisher;"

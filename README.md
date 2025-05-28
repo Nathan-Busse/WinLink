@@ -1,10 +1,10 @@
 # Winux
 
-Inspired by [winapps](https://github.com/winapps-org/winapps)
+Inspired by [winux](https://github.com/winux-org/winux)
 
-Winux shares the same idea as winapps, but focuses on beginner Linux users, lightweight performance, and an automated, streamlined setup GUI—similar to the experience of setting up Linux distros like Raspberry Pi OS Desktop.
+Winux shares the same idea as winux, but focuses on beginner Linux users, lightweight performance, and an automated, streamlined setup GUI—similar to the experience of setting up Linux distros like Raspberry Pi OS Desktop.
 
-My intention is not to rip off winapps, but to unlock its full potential for all users, regardless of their Linux experience.
+My intention is not to rip off winux, but to unlock its full potential for all users, regardless of their Linux experience.
 
 Winux also aims to make Microsoft Office accessible to Linux users without a hypervisor, using containers to access the Office suite as though it were native to your Linux OS of choice.
 

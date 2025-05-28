@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 # shellcheck disable=SC2034           # Silence warnings regarding unused variables globally.
 
 ### GLOBAL CONSTANTS ###
@@ -17,8 +18,8 @@ readonly WARNING_TEXT="\033[1;33m"    # Bold + Orange/Yellow
 # ERROR CODES
 readonly EC_FAILED_CD="1"        # Failed to change directory to location of script.
 readonly EC_BAD_ARGUMENT="2"     # Unsupported argument passed to script.
-readonly EC_EXISTING_INSTALL="3" # Existing conflicting winux installation.
-readonly EC_NO_CONFIG="4"        # Absence of a valid winux configuration file.
+readonly EC_EXISTING_INSTALL="3" # Existing conflicting Winux installation.
+readonly EC_NO_CONFIG="4"        # Absence of a valid Winux configuration file.
 readonly EC_MISSING_DEPS="5"     # Missing dependencies.
 readonly EC_NO_SUDO="6"          # Insufficient privilages to invoke superuser access.
 readonly EC_NOT_IN_GROUP="7"     # Current user not in group 'libvirt' and/or 'kvm'.
@@ -34,20 +35,20 @@ readonly EC_INVALID_FLAVOR="16"  # Backend specified is not 'libvirt', 'docker' 
 
 # PATHS
 # 'BIN'
-readonly SYS_BIN_PATH="/usr/local/bin"                  # UNIX path to 'bin' directory for a '--system' winux installation.
-readonly USER_BIN_PATH="${HOME}/.local/bin"             # UNIX path to 'bin' directory for a '--user' winux installation.
-readonly USER_BIN_PATH_WIN='\\tsclient\home\.local\bin' # WINDOWS path to 'bin' directory for a '--user' winux installation.
+readonly SYS_BIN_PATH="/usr/local/bin"                  # UNIX path to 'bin' directory for a '--system' Winux installation.
+readonly USER_BIN_PATH="${HOME}/.local/bin"             # UNIX path to 'bin' directory for a '--user' Winux installation.
+readonly USER_BIN_PATH_WIN='\\tsclient\home\.local\bin' # WINDOWS path to 'bin' directory for a '--user' Winux installation.
 # 'SOURCE'
-readonly SYS_SOURCE_PATH="${SYS_BIN_PATH}/winux-src" # UNIX path to winux source directory for a '--system' winux installation.
-readonly USER_SOURCE_PATH="${USER_BIN_PATH}/winux-src" # UNIX path to winux source directory for a '--system' winux installation.
+readonly SYS_SOURCE_PATH="${SYS_BIN_PATH}/winux-src" # UNIX path to Winux source directory for a '--system' Winux installation.
+readonly USER_SOURCE_PATH="${USER_BIN_PATH}/winux-src" # UNIX path to Winux source directory for a '--system' Winux installation.
 # 'APP'
-readonly SYS_APP_PATH="/usr/share/applications"                        # UNIX path to 'applications' directory for a '--system' winux installation.
-readonly USER_APP_PATH="${HOME}/.local/share/applications"             # UNIX path to 'applications' directory for a '--user' winux installation.
-readonly USER_APP_PATH_WIN='\\tsclient\home\.local\share\applications' # WINDOWS path to 'applications' directory for a '--user' winux installation.
+readonly SYS_APP_PATH="/usr/share/applications"                        # UNIX path to 'applications' directory for a '--system' Winux installation.
+readonly USER_APP_PATH="${HOME}/.local/share/applications"             # UNIX path to 'applications' directory for a '--user' Winux installation.
+readonly USER_APP_PATH_WIN='\\tsclient\home\.local\share\applications' # WINDOWS path to 'applications' directory for a '--user' Winux installation.
 # 'APPDATA'
-readonly SYS_APPDATA_PATH="/usr/local/share/winux"                  # UNIX path to 'application data' directory for a '--system' winux installation.
-readonly USER_APPDATA_PATH="${HOME}/.local/share/winux"             # UNIX path to 'application data' directory for a '--user' winux installation.
-readonly USER_APPDATA_PATH_WIN='\\tsclient\home\.local\share\winux' # WINDOWS path to 'application data' directory for a '--user' winux installation.
+readonly SYS_APPDATA_PATH="/usr/local/share/winux"                  # UNIX path to 'application data' directory for a '--system' Winux installation.
+readonly USER_APPDATA_PATH="${HOME}/.local/share/winux"             # UNIX path to 'application data' directory for a '--user' Winux installation.
+readonly USER_APPDATA_PATH_WIN='\\tsclient\home\.local\share\winux' # WINDOWS path to 'application data' directory for a '--user' Winux installation.
 # 'Installed Batch Script'
 readonly BATCH_SCRIPT_PATH="${USER_APPDATA_PATH}/installed.bat"          # UNIX path to a batch script used to search Windows for applications.
 readonly BATCH_SCRIPT_PATH_WIN="${USER_APPDATA_PATH_WIN}\\installed.bat" # WINDOWS path to a batch script used to search Windows for applications.
@@ -66,13 +67,12 @@ readonly DETECTED_FILE_PATH_WIN="${USER_APPDATA_PATH_WIN}\\detected" # WINDOWS p
 # 'FreeRDP Connection Test File'
 readonly TEST_PATH="${USER_APPDATA_PATH}/FreeRDP_Connection_Test"          # UNIX path to temporary file whose existence is used to confirm a successful RDP connection was established.
 readonly TEST_PATH_WIN="${USER_APPDATA_PATH_WIN}\\FreeRDP_Connection_Test" # WINDOWS path to temporary file whose existence is used to confirm a successful RDP connection was established.
-# 'winux Configuration File'
-readonly CONFIG_PATH="${HOME}/winux/winux.conf" # UNIX path to the winux configuration file.
+# 'Winux Configuration File'
+readonly CONFIG_PATH="${HOME}/.config/winux/winux.conf" # UNIX path to the Winux configuration file.
 # 'Inquirer Bash Script'
-readonly INQUIRER_PATH="winux/install/inquirer.sh" # UNIX path to the 'inquirer' script, which is used to produce selection menus.
+readonly INQUIRER_PATH="./install/inquirer.sh" # UNIX path to the 'inquirer' script, which is used to produce selection menus.
 
 # REMOTE DESKTOP CONFIGURATION
-readonly VM_NAME="winux"  # Name of the Windows VM (FOR 'libvirt' ONLY).
 readonly RDP_PORT=3389         # Port used for RDP on Windows.
 readonly DOCKER_IP="127.0.0.1" # Localhost.
 
@@ -83,18 +83,19 @@ OPT_USER=0      # Set to '1' if the user specifies '--user'.
 OPT_UNINSTALL=0 # Set to '1' if the user specifies '--uninstall'.
 OPT_AOSA=0      # Set to '1' if the user specifies '--setupAllOfficiallySupportedApps'.
 
-# winux CONFIGURATION FILE
-RDP_USER=""        # Imported variable.
-RDP_PASS=""        # Imported variable.
-RDP_DOMAIN=""      # Imported variable.
-RDP_IP=""          # Imported variable.
-WAFLAVOR="docker"  # Imported variable.
-RDP_SCALE=100      # Imported variable.
-RDP_FLAGS=""       # Imported variable.
-MULTIMON="false"   # Imported variable.
-DEBUG="true"       # Imported variable.
-FREERDP_COMMAND="" # Imported variable.
-MULTI_FLAG=""      # Set based on value of $MULTIMON.
+# WINUX CONFIGURATION FILE
+RDP_USER=""          # Imported variable.
+RDP_PASS=""          # Imported variable.
+RDP_DOMAIN=""        # Imported variable.
+RDP_IP=""            # Imported variable.
+VM_NAME="Winux" # Name of the Windows VM (FOR 'libvirt' ONLY).
+WAFLAVOR="docker"    # Imported variable.
+RDP_SCALE=100        # Imported variable.
+RDP_FLAGS=""         # Imported variable.
+MULTIMON="false"     # Imported variable.
+DEBUG="true"         # Imported variable.
+FREERDP_COMMAND=""   # Imported variable.
+MULTI_FLAG=""        # Set based on value of $MULTIMON.
 
 # PERMISSIONS AND DIRECTORIES
 SUDO=""         # Set to "sudo" if the user specifies '--system', or "" if the user specifies '--user'.
@@ -129,17 +130,17 @@ function waTerminateScript() {
 # Role: Displays usage information for the script.
 function waUsage() {
     echo -e "Usage:
-  ${COMMAND_TEXT}    --user${CLEAR_TEXT}                                        # Install winux and selected applications in ${HOME}
-  ${COMMAND_TEXT}    --system${CLEAR_TEXT}                                      # Install winux and selected applications in /usr
-  ${COMMAND_TEXT}    --user --setupAllOfficiallySupportedApps${CLEAR_TEXT}      # Install winux and all officially supported applications in ${HOME}
-  ${COMMAND_TEXT}    --system --setupAllOfficiallySupportedApps${CLEAR_TEXT}    # Install winux and all officially supported applications in /usr
+  ${COMMAND_TEXT}    --user${CLEAR_TEXT}                                        # Install Winux and selected applications in ${HOME}
+  ${COMMAND_TEXT}    --system${CLEAR_TEXT}                                      # Install Winux and selected applications in /usr
+  ${COMMAND_TEXT}    --user --setupAllOfficiallySupportedApps${CLEAR_TEXT}      # Install Winux and all officially supported applications in ${HOME}
+  ${COMMAND_TEXT}    --system --setupAllOfficiallySupportedApps${CLEAR_TEXT}    # Install Winux and all officially supported applications in /usr
   ${COMMAND_TEXT}    --user --uninstall${CLEAR_TEXT}                            # Uninstall everything in ${HOME}
   ${COMMAND_TEXT}    --system --uninstall${CLEAR_TEXT}                          # Uninstall everything in /usr
   ${COMMAND_TEXT}    --help${CLEAR_TEXT}                                        # Display this usage message."
 }
 
 # Name: 'waGetSourceCode'
-# Role: Grab the winux source code using Git.
+# Role: Grab the Winux source code using Git.
 function waGetSourceCode() {
     # Declare variables.
     local SCRIPT_DIR_PATH="" # Stores the absolute path of the directory containing the script.
@@ -150,14 +151,14 @@ function waGetSourceCode() {
     # Check if winux is currently installed on $SOURCE_PATH
     if [[ -f "$SCRIPT_DIR_PATH/winux" && "$SCRIPT_DIR_PATH" -ne "$SOURCE_PATH" ]]; then
         # Display a warning.
-        echo -e "${WARNING_TEXT}[WARNING]${CLEAR_TEXT} You are running a winux installation located outside of default location '${SOURCE_PATH}'. A new installation will be created."
+        echo -e "${WARNING_TEXT}[WARNING]${CLEAR_TEXT} You are running a Winux installation located outside of default location '${SOURCE_PATH}'. A new installation will be created."
         echo -e "${WARNING_TEXT}[WARNING]${CLEAR_TEXT} You might want to remove your old installation on '${SCRIPT_DIR_PATH}'."
     fi
 
     if [[ ! -d "$SOURCE_PATH" ]]; then
         $SUDO git clone --recurse-submodules --remote-submodules https://github.com/Nathan-Busse/winux.git "$SOURCE_PATH"
     else
-        echo -e "${INFO_TEXT}winux installation already present at ${CLEAR_TEXT}${COMMAND_TEXT}${SOURCE_PATH}${CLEAR_TEXT}${INFO_TEXT}. Updating...${CLEAR_TEXT}"
+        echo -e "${INFO_TEXT}Winux installation already present at ${CLEAR_TEXT}${COMMAND_TEXT}${SOURCE_PATH}${CLEAR_TEXT}${INFO_TEXT}. Updating...${CLEAR_TEXT}"
         $SUDO git -C "$SOURCE_PATH" pull --no-rebase
     fi
 
@@ -184,17 +185,21 @@ function waGetSourceCode() {
 
 # Name: 'waGetInquirer'
 # Role: Loads the inquirer script, even if the source isn't cloned yet
-# ...existing code...
 function waGetInquirer() {
-    local INQUIRER="./install/inquirer.sh"
+    local INQUIRER=$INQUIRER_PATH
 
-    if [ ! -f "$INQUIRER" ]; then
-        echo -e "${ERROR_TEXT}ERROR:${CLEAR_TEXT} ${BOLD_TEXT}Missing inquirer.sh.${CLEAR_TEXT}"
-        echo -e "${INFO_TEXT}Could not find ${INQUIRER}.${CLEAR_TEXT}"
-        exit 1
+    if [ -d "$SYS_SOURCE_PATH" ]; then
+        INQUIRER=$SYS_SOURCE_PATH/$INQUIRER_PATH
+    elif [ -d "$USER_SOURCE_PATH" ] ; then
+        INQUIRER=$USER_SOURCE_PATH/$INQUIRER_PATH
+    else
+        INQUIRER="/tmp/waInquirer.sh"
+        rm -f "$INQUIRER"
+
+        curl -o "$INQUIRER" "https://raw.githubusercontent.com/Nathan-Busse/winux/main/install/inquirer.sh"
     fi
 
-    # shellcheck source=/dev/null
+    # shellcheck source=/dev/null # Exclude this file from being checked by ShellCheck.
     source "$INQUIRER"
 }
 
@@ -245,7 +250,7 @@ function waCheckInput() {
     else
         # Install vs. uninstall?
         OPTIONS=("Install" "Uninstall")
-        menuFromArr SELECTED_OPTION "Install or uninstall winux?" "${OPTIONS[@]}"
+        inqMenu= "Install or uninstall Winux?" OPTIONS SELECTED_OPTION
 
         # Set flags.
         if [[ $SELECTED_OPTION == "Uninstall" ]]; then
@@ -254,7 +259,7 @@ function waCheckInput() {
 
         # User vs. system?
         OPTIONS=("Current User" "System")
-        menuFromArr SELECTED_OPTION "Configure winux for the current user '$(whoami)' or the whole system?" "${OPTIONS[@]}"
+        inqMenu= "Configure Winux for the current user '$(whoami)' or the whole system?" OPTIONS SELECTED_OPTION
 
         # Set flags.
         if [[ $SELECTED_OPTION == "Current User" ]]; then
@@ -266,7 +271,7 @@ function waCheckInput() {
         # Automatic vs. manual?
         if [ "$OPT_UNINSTALL" -eq 0 ]; then
             OPTIONS=("Manual (Default)" "Automatic")
-            menuFromArr SELECTED_OPTION "Automatically install supported applications or choose manually?" "${OPTIONS[@]}"
+            inqMenu= "Automatically install supported applications or choose manually?" OPTIONS SELECTED_OPTION
 
             # Set flags.
             if [[ $SELECTED_OPTION == "Automatic" ]]; then
@@ -367,10 +372,10 @@ function waConfigurePathsAndPermissions() {
 }
 
 # Name: 'waCheckExistingInstall'
-# Role: Identifies any existing winux installations that may conflict with the new installation.
+# Role: Identifies any existing Winux installations that may conflict with the new installation.
 function waCheckExistingInstall() {
     # Print feedback.
-    echo -n "Checking for existing conflicting winux installations... "
+    echo -n "Checking for existing conflicting Winux installations... "
 
     # Check for an existing 'user' installation.
     if [[ -f "${USER_BIN_PATH}/winux" || -d "${USER_SOURCE_PATH}/winux" ]]; then
@@ -378,14 +383,14 @@ function waCheckExistingInstall() {
         echo -e "${FAIL_TEXT}Failed!${CLEAR_TEXT}\n"
 
         # Display the error type.
-        echo -e "${ERROR_TEXT}ERROR:${CLEAR_TEXT} ${BOLD_TEXT}EXISTING 'USER' winux INSTALLATION.${CLEAR_TEXT}"
+        echo -e "${ERROR_TEXT}ERROR:${CLEAR_TEXT} ${BOLD_TEXT}EXISTING 'USER' WINUX INSTALLATION.${CLEAR_TEXT}"
 
         # Display the error details.
-        echo -e "${INFO_TEXT}A previous winux installation was detected for the current user.${CLEAR_TEXT}"
+        echo -e "${INFO_TEXT}A previous Winux installation was detected for the current user.${CLEAR_TEXT}"
 
         # Display the suggested action(s).
         echo "--------------------------------------------------------------------------------"
-        echo -e "Please remove the existing winux installation using ${COMMAND_TEXT}winux-setup --user --uninstall${CLEAR_TEXT}."
+        echo -e "Please remove the existing Winux installation using ${COMMAND_TEXT}winux-setup --user --uninstall${CLEAR_TEXT}."
         echo "--------------------------------------------------------------------------------"
 
         # Terminate the script.
@@ -398,14 +403,14 @@ function waCheckExistingInstall() {
         echo -e "${FAIL_TEXT}Failed!${CLEAR_TEXT}\n"
 
         # Display the error type.
-        echo -e "${ERROR_TEXT}ERROR:${CLEAR_TEXT} ${BOLD_TEXT}EXISTING 'SYSTEM' winux INSTALLATION.${CLEAR_TEXT}"
+        echo -e "${ERROR_TEXT}ERROR:${CLEAR_TEXT} ${BOLD_TEXT}EXISTING 'SYSTEM' WINUX INSTALLATION.${CLEAR_TEXT}"
 
         # Display the error details.
-        echo -e "${INFO_TEXT}A previous system-wide winux installation was detected.${CLEAR_TEXT}"
+        echo -e "${INFO_TEXT}A previous system-wide Winux installation was detected.${CLEAR_TEXT}"
 
         # Display the suggested action(s).
         echo "--------------------------------------------------------------------------------"
-        echo -e "Please remove the existing winux installation using ${COMMAND_TEXT}winux-setup --system --uninstall${CLEAR_TEXT}."
+        echo -e "Please remove the existing Winux installation using ${COMMAND_TEXT}winux-setup --system --uninstall${CLEAR_TEXT}."
         echo "--------------------------------------------------------------------------------"
 
         # Terminate the script.
@@ -450,10 +455,10 @@ function waFixScale() {
 }
 
 # Name: 'waLoadConfig'
-# Role: Loads settings specified within the winux configuration file.
+# Role: Loads settings specified within the Winux configuration file.
 function waLoadConfig() {
     # Print feedback.
-    echo -n "Attempting to load winux configuration file... "
+    echo -n "Attempting to load Winux configuration file... "
 
     if [ ! -f "$CONFIG_PATH" ]; then
         # Complete the previous line.
@@ -463,7 +468,7 @@ function waLoadConfig() {
         echo -e "${ERROR_TEXT}ERROR:${CLEAR_TEXT} ${BOLD_TEXT}MISSING CONFIGURATION FILE.${CLEAR_TEXT}"
 
         # Display the error details.
-        echo -e "${INFO_TEXT}A valid winux configuration file was not found.${CLEAR_TEXT}"
+        echo -e "${INFO_TEXT}A valid Winux configuration file was not found.${CLEAR_TEXT}"
 
         # Display the suggested action(s).
         echo "--------------------------------------------------------------------------------"
@@ -474,7 +479,7 @@ function waLoadConfig() {
         # Terminate the script.
         return "$EC_NO_CONFIG"
     else
-        # Load the winux configuration file.
+        # Load the Winux configuration file.
         # shellcheck source=/dev/null # Exclude this file from being checked by ShellCheck.
         source "$CONFIG_PATH"
     fi
@@ -560,7 +565,7 @@ function waCheckScriptDependencies() {
 }
 
 # Name: 'waCheckInstallDependencies'
-# Role: Terminate script if dependencies required to install winux are missing.
+# Role: Terminate script if dependencies required to install Winux are missing.
 function waCheckInstallDependencies() {
     # Declare variables.
     local FREERDP_MAJOR_VERSION="" # Stores the major version of the installed copy of FreeRDP.
@@ -912,7 +917,7 @@ function waCheckContainerRunning() {
     local COMPOSE_COMMAND=""
 
     # Determine the state of the container.
-    CONTAINER_STATE=$("$WAFLAVOR" ps --all --filter name="winux" --format '{{.Status}}')
+    CONTAINER_STATE=$("$WAFLAVOR" ps --all --filter name="Winux" --format '{{.Status}}')
     CONTAINER_STATE=${CONTAINER_STATE,,} # Convert the string to lowercase.
     CONTAINER_STATE=${CONTAINER_STATE%% *} # Extract the first word.
 
@@ -936,7 +941,7 @@ function waCheckContainerRunning() {
         # Display the suggested action(s).
         echo "--------------------------------------------------------------------------------"
         echo "Please ensure Windows is powered on:"
-        echo -e "${COMMAND_TEXT}${COMPOSE_COMMAND} --file ./compose.yaml up${CLEAR_TEXT}"
+        echo -e "${COMMAND_TEXT}${COMPOSE_COMMAND} --file ~/.config/winux/compose.yaml start${CLEAR_TEXT}"
         echo "--------------------------------------------------------------------------------"
 
         # Terminate the script.
@@ -995,7 +1000,7 @@ function waCheckPortOpen() {
 
         # Display the suggested action(s).
         echo "--------------------------------------------------------------------------------"
-        echo "Please ensure Remote Desktop is configured on Windows as per the winux README."
+        echo "Please ensure Remote Desktop is configured on Windows as per the Winux README."
         echo "--------------------------------------------------------------------------------"
 
         # Terminate the script.
@@ -1083,13 +1088,13 @@ function waCheckRDPAccess() {
         echo "--------------------------------------------------------------------------------"
         echo -e "Please view the log at ${COMMAND_TEXT}${FREERDP_LOG}${CLEAR_TEXT}."
         echo "Troubleshooting Tips:"
-        echo "  - Ensure the user is logged out of Windows prior to initiating the winux installation."
-        echo "  - Ensure the credentials within the winux configuration file are correct."
+        echo "  - Ensure the user is logged out of Windows prior to initiating the Winux installation."
+        echo "  - Ensure the credentials within the Winux configuration file are correct."
         echo -e "  - Utilise a new certificate by removing relevant certificate(s) in ${COMMAND_TEXT}${HOME}/.config/freerdp/server${CLEAR_TEXT}."
         echo "  - If using 'libvirt', ensure the Windows VM is correctly named as specified within the README."
         echo "  - If using 'libvirt', ensure 'Remote Desktop' is enabled within the Windows VM."
         echo "  - If using 'libvirt', ensure you have merged 'RDPApps.reg' into the Windows VM's registry."
-        echo "  - If using 'libvirt', try logging into and back out of the Windows VM within 'virt-manager' prior to initiating the winux installation."
+        echo "  - If using 'libvirt', try logging into and back out of the Windows VM within 'virt-manager' prior to initiating the Winux installation."
         echo "--------------------------------------------------------------------------------"
 
         # Terminate the script.
@@ -1120,7 +1125,7 @@ function waFindInstalled() {
     # Make the output directory if required.
     mkdir -p "$USER_APPDATA_PATH"
 
-    # Remove temporary files from previous winux installations.
+    # Remove temporary files from previous Winux installations.
     rm -f "$BATCH_SCRIPT_PATH" "$TMP_INST_FILE_PATH" "$INST_FILE_PATH" "$PS_SCRIPT_HOME_PATH" "$DETECTED_FILE_PATH"
 
     # Copy PowerShell script to a directory within the user's home folder.
@@ -1392,7 +1397,7 @@ function waConfigureApps() {
         "Choose specific officially supported applications to set up"
         "Skip setting up any officially supported applications"
     )
-    menuFromArr "How would you like to handle officially supported applications?" OPTIONS APP_INSTALL
+    inqMenu= "How would you like to handle officially supported applications?" OPTIONS APP_INSTALL
 
     # Remove unselected officially supported applications from the 'install' file.
     if [[ $APP_INSTALL == "Choose specific officially supported applications to set up" ]]; then
@@ -1477,7 +1482,7 @@ function waConfigureDetectedApps() {
             "Select which applications to set up"
             "Do not set up any applications"
         )
-        menuFromArr "How would you like to handle other detected applications?" OPTIONS APP_INSTALL
+        inqMenu= "How would you like to handle other detected applications?" OPTIONS APP_INSTALL
 
         # Store selected detected applications.
         if [[ $APP_INSTALL == "Select which applications to set up" ]]; then
@@ -1517,7 +1522,7 @@ FULL_NAME=\"${PROGRAM_NAME}\"
 # Path to executable inside Windows
 WIN_EXECUTABLE=\"${EXES[$INDEX]}\"
 # GNOME Categories
-CATEGORIES=\"winux\"
+CATEGORIES=\"Winux\"
 # GNOME MIME Types
 MIME_TYPES=\"\""
 
@@ -1539,15 +1544,15 @@ MIME_TYPES=\"\""
 }
 
 # Name: 'waInstall'
-# Role: Installs winux.
+# Role: Installs Winux.
 function waInstall() {
     # Print feedback.
-    echo -e "${BOLD_TEXT}Installing winux.${CLEAR_TEXT}"
+    echo -e "${BOLD_TEXT}Installing Winux.${CLEAR_TEXT}"
 
-    # Check for existing conflicting winux installations.
+    # Check for existing conflicting Winux installations.
     waCheckExistingInstall
 
-    # Load the winux configuration file.
+    # Load the Winux configuration file.
     waLoadConfig
 
     # Check for missing dependencies.
@@ -1567,8 +1572,6 @@ function waInstall() {
     if [[ -n $RDP_FLAGS ]]; then
         FREERDP_COMMAND="${FREERDP_COMMAND} ${RDP_FLAGS}"
     fi
-
-   
 
     # If using 'docker' or 'podman', set RDP_IP to localhost.
     if [ "$WAFLAVOR" = "docker" ] || [ "$WAFLAVOR" = "podman" ]; then
@@ -1593,10 +1596,10 @@ function waInstall() {
         waCheckPortOpen
     else
         # Display the error type.
-        echo -e "${ERROR_TEXT}ERROR:${CLEAR_TEXT} ${BOLD_TEXT}INVALID winux BACKEND.${CLEAR_TEXT}"
+        echo -e "${ERROR_TEXT}ERROR:${CLEAR_TEXT} ${BOLD_TEXT}INVALID WINUX BACKEND.${CLEAR_TEXT}"
 
         # Display the error details.
-        echo -e "${INFO_TEXT}An invalid winux backend '${WAFLAVOR}' was specified.${CLEAR_TEXT}"
+        echo -e "${INFO_TEXT}An invalid Winux backend '${WAFLAVOR}' was specified.${CLEAR_TEXT}"
 
         # Display the suggested action(s).
         echo "--------------------------------------------------------------------------------"
@@ -1622,7 +1625,7 @@ function waInstall() {
     # Check for installed applications.
     waFindInstalled
 
-    # Install the winux bash scripts.
+    # Install the Winux bash scripts.
     $SUDO ln -sf "${SOURCE_PATH}/bin/winux" "${BIN_PATH}/winux"
     $SUDO ln -sf "${SOURCE_PATH}/setup.sh" "${BIN_PATH}/winux-setup"
 
@@ -1662,33 +1665,33 @@ function waEnsureOnPath() {
 }
 
 # Name: 'waUninstall'
-# Role: Uninstalls winux.
+# Role: Uninstalls Winux.
 function waUninstall() {
     # Print feedback.
     [ "$OPT_SYSTEM" -eq 1 ] && echo -e "${BOLD_TEXT}REMOVING SYSTEM INSTALLATION.${CLEAR_TEXT}"
     [ "$OPT_USER" -eq 1 ] && echo -e "${BOLD_TEXT}REMOVING USER INSTALLATION.${CLEAR_TEXT}"
 
     # Declare variables.
-    local winux_DESKTOP_FILES=()    # Stores a list of '.desktop' file paths.
-    local winux_APP_BASH_SCRIPTS=() # Stores a list of bash script paths.
+    local WINUX_DESKTOP_FILES=()    # Stores a list of '.desktop' file paths.
+    local WINUX_APP_BASH_SCRIPTS=() # Stores a list of bash script paths.
     local DESKTOP_FILE_NAME=""        # Stores the name of the '.desktop' file for the application.
     local BASH_SCRIPT_NAME=""         # Stores the name of the application.
 
-    # Remove the 'winux' bash scripts.
+    # Remove the 'Winux' bash scripts.
     $SUDO rm -f "${BIN_PATH}/winux"
     $SUDO rm -f "${BIN_PATH}/winux-setup"
 
-    # Remove winux configuration data, temporary files and logs.
+    # Remove Winux configuration data, temporary files and logs.
     rm -rf "$USER_APPDATA_PATH"
 
     # Remove application icons and shortcuts.
     $SUDO rm -rf "$APPDATA_PATH"
 
     # Store '.desktop' files containing "${BIN_PATH}/winux" in an array, returning an empty array if no such files exist.
-    readarray -t winux_DESKTOP_FILES < <(grep -l -d skip "${BIN_PATH}/winux" "${APP_PATH}/"* 2>/dev/null || true)
+    readarray -t WINUX_DESKTOP_FILES < <(grep -l -d skip "${BIN_PATH}/winux" "${APP_PATH}/"* 2>/dev/null || true)
 
     # Remove each '.desktop' file.
-    for DESKTOP_FILE_PATH in "${winux_DESKTOP_FILES[@]}"; do
+    for DESKTOP_FILE_PATH in "${WINUX_DESKTOP_FILES[@]}"; do
         # Trim leading and trailing whitespace from '.desktop' file path.
         DESKTOP_FILE_PATH=$(echo "$DESKTOP_FILE_PATH" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
 
@@ -1705,11 +1708,11 @@ function waUninstall() {
         echo -e "${DONE_TEXT}Done!${CLEAR_TEXT}"
     done
 
-    # Store the paths of bash scripts calling 'winux' to launch specific applications in an array, returning an empty array if no such files exist.
-    readarray -t winux_APP_BASH_SCRIPTS < <(grep -l -d skip "${BIN_PATH}/winux" "${BIN_PATH}/"* 2>/dev/null || true)
+    # Store the paths of bash scripts calling 'Winux' to launch specific applications in an array, returning an empty array if no such files exist.
+    readarray -t WINUX_APP_BASH_SCRIPTS < <(grep -l -d skip "${BIN_PATH}/winux" "${BIN_PATH}/"* 2>/dev/null || true)
 
     # Remove each bash script.
-    for BASH_SCRIPT_PATH in "${winux_APP_BASH_SCRIPTS[@]}"; do
+    for BASH_SCRIPT_PATH in "${WINUX_APP_BASH_SCRIPTS[@]}"; do
         # Trim leading and trailing whitespace from bash script path.
         BASH_SCRIPT_PATH=$(echo "$BASH_SCRIPT_PATH" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
 
@@ -1727,7 +1730,7 @@ function waUninstall() {
     done
 
     # Print caveats.
-    echo -e "\n${INFO_TEXT}Please note that your winux configuration and the winux source code were not removed.${CLEAR_TEXT}"
+    echo -e "\n${INFO_TEXT}Please note that your Winux configuration and the Winux source code were not removed.${CLEAR_TEXT}"
     echo -e "${INFO_TEXT}You can remove these manually by running:${CLEAR_TEXT}"
     echo -e "${COMMAND_TEXT}rm -r $(dirname "$CONFIG_PATH")${CLEAR_TEXT}"
     echo -e "${COMMAND_TEXT}rm -r ${SOURCE_PATH}${CLEAR_TEXT}\n"
@@ -1741,7 +1744,7 @@ function waUninstall() {
 echo -e "${BOLD_TEXT}\
 ################################################################################
 #                                                                              #
-#                            winux Install Wizard                              #
+#                            Winux Install Wizard                            #
 #                                                                              #
 ################################################################################
 ${CLEAR_TEXT}"
@@ -1761,7 +1764,7 @@ waConfigurePathsAndPermissions
 # Get the source code
 waGetSourceCode
 
-# Install or uninstall winux.
+# Install or uninstall Winux.
 if [ "$OPT_UNINSTALL" -eq 1 ]; then
     waUninstall
 else
