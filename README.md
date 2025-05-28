@@ -68,7 +68,7 @@ dependencies = [
     "curl",
     "dialog",
     "libnotify-bin",
-    "netcat",
+    "netcat-openbsd",
     "freerdp3-x11",
     "virt-manager",
     "iproute2"

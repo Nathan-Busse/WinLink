@@ -5,7 +5,7 @@ dependencies = [
     "curl",
     "dialog",
     "libnotify-bin",
-    "netcat",
+    "netcat-openbsd",
     "freerdp3-x11",
     "virt-manager",
     "iproute2"
@@ -13,12 +13,8 @@ dependencies = [
 
 def install_packages(packages):
     try:
-        subprocess.run(
-            ["sudo", "apt", "update"], check=True
-        )
-        subprocess.run(
-            ["sudo", "apt", "install", "-y"] + packages, check=True
-        )
+        subprocess.run(["sudo", "apt", "update"], check=True)
+        subprocess.run(["sudo", "apt", "install", "-y"] + packages, check=True)
         print("All dependencies installed successfully.")
     except subprocess.CalledProcessError as e:
         print(f"Error installing packages: {e}")
