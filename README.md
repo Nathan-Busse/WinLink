@@ -57,3 +57,16 @@ sudo apt install -y curl dialog freerdp3-x11 git iproute2 libnotify-bin netcat-o
 ### 4. (Optional) Install All Dependencies via Python Script
 
 You can use the provided Python script to install all dependencies automatically `install_deps.py` in the project's root directory
+
+# Deploy docker creator:
+Run the script `start-container.sh` located in the root directory:
+
+**Step 1:**
+```bash
+cd winux
+```
+
+**Step 2:**
+```bash
+bash start-container.sh
+```
