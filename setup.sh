@@ -69,7 +69,7 @@ readonly TEST_PATH_WIN="${USER_APPDATA_PATH_WIN}\\FreeRDP_Connection_Test" # WIN
 # 'winux Configuration File'
 readonly CONFIG_PATH="${HOME}/winux/winux.conf" # UNIX path to the winux configuration file.
 # 'Inquirer Bash Script'
-readonly INQUIRER_PATH=".winux/install/inquirer.sh" # UNIX path to the 'inquirer' script, which is used to produce selection menus.
+readonly INQUIRER_PATH="winux/install/inquirer.sh" # UNIX path to the 'inquirer' script, which is used to produce selection menus.
 
 # REMOTE DESKTOP CONFIGURATION
 readonly VM_NAME="winux"  # Name of the Windows VM (FOR 'libvirt' ONLY).
@@ -84,8 +84,8 @@ OPT_UNINSTALL=0 # Set to '1' if the user specifies '--uninstall'.
 OPT_AOSA=0      # Set to '1' if the user specifies '--setupAllOfficiallySupportedApps'.
 
 # winux CONFIGURATION FILE
-RDP_USER="admin"        # Imported variable.
-RDP_PASS="admin"        # Imported variable.
+RDP_USER=""        # Imported variable.
+RDP_PASS=""        # Imported variable.
 RDP_DOMAIN=""      # Imported variable.
 RDP_IP=""          # Imported variable.
 WAFLAVOR="docker"  # Imported variable.
