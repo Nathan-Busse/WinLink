@@ -17,7 +17,13 @@ Winux also aims to make Microsoft Office accessible to Linux users without a hyp
 Open your terminal and run:
 ```bash
 sudo apt update
+```
+
+```bash
 sudo apt full-upgrade -y
+```
+
+```bash
 sudo reboot
 ```
 
@@ -26,8 +32,17 @@ sudo reboot
 If you plan to use the Docker backend (recommended for running Windows/Office in a container), install Docker:
 ```bash
 sudo apt install -y docker.io
+```
+
+```bash
 sudo systemctl enable --now docker
+```
+
+```bash
 sudo usermod -aG docker $USER
+```
+
+```bash
 sudo reboot
 ```
 > **Note:** Reboot is required for group changes to take effect.
