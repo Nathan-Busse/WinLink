@@ -3,7 +3,7 @@
 # Ensure the script is run from the directory containing the compose.yaml file
 # and that Docker Compose is installed.
 # Check if Docker Compose is installed
-if ! command -v docker-compose &> /dev/null; then
+if ! command -v docker compose --file ./compose.yaml up &> /dev/null; then
     echo "Docker Compose could not be found. Please install it first."
     exit 1
 fi
@@ -14,4 +14,3 @@ if [ ! -f "./compose.yaml" ]; then
 fi
 # Start the Docker Compose services
 echo "Starting Docker Compose services..."
-docker compose --file ./compose.yaml up
