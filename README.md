@@ -56,32 +56,4 @@ sudo apt install -y curl dialog freerdp3-x11 git iproute2 libnotify-bin netcat-o
 
 ### 4. (Optional) Install All Dependencies via Python Script
 
-You can use the provided Python script to install all dependencies automatically:
-
-Save the following as `install_deps.py` in the project directory:
-
-````python
-import subprocess
-
-dependencies = [
-    "git",
-    "curl",
-    "dialog",
-    "libnotify-bin",
-    "netcat-openbsd",
-    "freerdp3-x11",
-    "virt-manager",
-    "iproute2"
-]
-
-def install_packages(packages):
-    try:
-        subprocess.run(["sudo", "apt", "update"], check=True)
-        subprocess.run(["sudo", "apt", "install", "-y"] + packages, check=True)
-        print("All dependencies installed successfully.")
-    except subprocess.CalledProcessError as e:
-        print(f"Error installing packages: {e}")
-
-if __name__ == "__main__":
-    install_packages(dependencies)
-````
+You can use the provided Python script to install all dependencies automatically `install_deps.py` in the project's root directory
