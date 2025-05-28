@@ -43,7 +43,7 @@ declare -rx MENU_RESUME="Resume!bash -c resume_windows!${ICONS_PATH}/Resume.svg"
 declare -rx MENU_HIBERNATE="Hibernate!bash -c hibernate_windows!${ICONS_PATH}/Hibernate.svg"
 
 # Other
-declare -rx VM_NAME="RDPWindows"
+declare -rx VM_NAME="Winux"
 declare -rx CONTAINER_NAME="Winux"
 declare -rx DEFAULT_FLAVOR="docker"
 
