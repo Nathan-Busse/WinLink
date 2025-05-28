@@ -51,7 +51,7 @@ sudo reboot
 
 Install all required dependencies for Winux:
 ```bash
-sudo apt install -y git curl dialog libnotify-bin netcat freerdp3-x11 virt-manager iproute2
+sudo apt install -y curl dialog freerdp3-x11 git iproute2 libnotify-bin netcat-openbsd
 ```
 
 ### 4. (Optional) Install All Dependencies via Python Script
