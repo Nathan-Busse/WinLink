@@ -18,6 +18,27 @@ I also want to make Office accessible to linux users without a hypervisor but ra
 7. `sudo apt install virt-manager`
 8. `sudo apt install iproute2`
 
+If using Debian/Ubuntu distro in your systems terminal run the following command:
+```bash
+sudo apt update
+```
+if there are packeages to install run the folowing command:
+
+```bash
+
+sudo apt full-upgrade -y
+```
+then run:
+```bash
+
+sudo reboot
+```
+once all packages are up to date now run:
+
+```bash
+sudo apt install -y git curl dialog libnotify-bin netcat freerdp3-x11 virt-manager iproute2
+```
+
 Below is a Python script that will install all these dependencies using `subprocess` to call `apt`:
 
 ````python
