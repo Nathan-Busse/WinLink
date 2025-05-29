@@ -68,7 +68,7 @@ readonly DETECTED_FILE_PATH_WIN="${USER_APPDATA_PATH_WIN}\\detected" # WINDOWS p
 readonly TEST_PATH="${USER_APPDATA_PATH}/FreeRDP_Connection_Test"          # UNIX path to temporary file whose existence is used to confirm a successful RDP connection was established.
 readonly TEST_PATH_WIN="${USER_APPDATA_PATH_WIN}\\FreeRDP_Connection_Test" # WINDOWS path to temporary file whose existence is used to confirm a successful RDP connection was established.
 # 'Winux Configuration File'
-readonly CONFIG_PATH="${HOME}/.config/winux/winux.conf" # UNIX path to the Winux configuration file.
+readonly CONFIG_PATH="${HOME}/winux/winux.conf" # UNIX path to the Winux configuration file.
 # 'Inquirer Bash Script'
 readonly INQUIRER_PATH="./install/inquirer.sh" # UNIX path to the 'inquirer' script, which is used to produce selection menus.
 
@@ -250,7 +250,7 @@ function waCheckInput() {
     else
         # Install vs. uninstall?
         OPTIONS=("Install" "Uninstall")
-        inqMenu= "Install or uninstall Winux?" OPTIONS SELECTED_OPTION
+        inqMenu "Install or uninstall Winux?" OPTIONS SELECTED_OPTION
 
         # Set flags.
         if [[ $SELECTED_OPTION == "Uninstall" ]]; then
@@ -259,7 +259,7 @@ function waCheckInput() {
 
         # User vs. system?
         OPTIONS=("Current User" "System")
-        inqMenu= "Configure Winux for the current user '$(whoami)' or the whole system?" OPTIONS SELECTED_OPTION
+        inqMenu "Configure Winux for the current user '$(whoami)' or the whole system?" OPTIONS SELECTED_OPTION
 
         # Set flags.
         if [[ $SELECTED_OPTION == "Current User" ]]; then
@@ -271,7 +271,7 @@ function waCheckInput() {
         # Automatic vs. manual?
         if [ "$OPT_UNINSTALL" -eq 0 ]; then
             OPTIONS=("Manual (Default)" "Automatic")
-            inqMenu= "Automatically install supported applications or choose manually?" OPTIONS SELECTED_OPTION
+            inqMenu "Automatically install supported applications or choose manually?" OPTIONS SELECTED_OPTION
 
             # Set flags.
             if [[ $SELECTED_OPTION == "Automatic" ]]; then
@@ -1397,7 +1397,7 @@ function waConfigureApps() {
         "Choose specific officially supported applications to set up"
         "Skip setting up any officially supported applications"
     )
-    inqMenu= "How would you like to handle officially supported applications?" OPTIONS APP_INSTALL
+    inqMenu "How would you like to handle officially supported applications?" OPTIONS APP_INSTALL
 
     # Remove unselected officially supported applications from the 'install' file.
     if [[ $APP_INSTALL == "Choose specific officially supported applications to set up" ]]; then
@@ -1482,7 +1482,7 @@ function waConfigureDetectedApps() {
             "Select which applications to set up"
             "Do not set up any applications"
         )
-        inqMenu= "How would you like to handle other detected applications?" OPTIONS APP_INSTALL
+        inqMenu "How would you like to handle other detected applications?" OPTIONS APP_INSTALL
 
         # Store selected detected applications.
         if [[ $APP_INSTALL == "Select which applications to set up" ]]; then
