@@ -34,78 +34,62 @@ sudo reboot
 sudo apt install gnome-terminal
 ```
 
-**Step 2: Install Docker Desktop**
-1. Set up Docker's package repository. 
-   - See step one of [install using the apt repository](https://docs.docker.com/engine/install/ubuntu/  #install-using-the-repository)
-  
-2. Download the latest [DEB package](https://desktop.docker.com/linux/main/amd64/docker-desktop-amd64.deb?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64)
-   - For checksums see the [Release notes.](https://docs.docker.com/desktop/release-notes/)
+**Step 2: Install Docker Engine**
+1. Uninstal old versions:
+Before you can install Docker Engine, you need to uninstall any conflicting packages.
 
-3. Install the package using `apt`:
+Your Linux distribution may provide unofficial Docker packages, which may conflict with the official packages provided by Docker.
+You must uninstall these packages before you install the official version of Docker Engine.
+
+The unofficial packages to uninstall are:
+
+   - docker.io
+   - docker-compose
+   - docker-compose-v2
+   - docker-doc
+   - podman-docker
+
+Moreover, Docker Engine depends on `containerd` and `runc`. Docker Engine bundles these dependencies as one bundle: `containerd.io`.
+If you have installed the `containerd` or `runc` previously, uninstall them to avoid conflicts with the versions bundled with Docker Engine.
+
+Run the following command to uninstall all conflicting packages:
 ```bash
-    sudo apt-get update
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
 ```
 
+2. Install using the `apt`repository:
 ```bash
-sudo apt-get install ./docker-desktop-amd64.deb
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+
 ```
-**Note**
-At the end of the installation processs, `apt` displays an error due to installing a downloaded package.
-You can ignore this error message. The message is as follows:
-```bash 
-N: Download is performed unsandboxed as root, as file '/home/user/Downloads/docker-desktop.deb' couldn't be accessed by user '_apt'. - pkgAcquire::Run (13: Permission denied)
-```
-By default, Docker Desktop is installed at `/opt/docker-desktop`.
 
-The DEB package includes a post-install script that completes additional setup steps automatically.
-
-The post-install script:
-
-- Sets the capability on the Docker Desktop binary to map privileged ports and set resource limits.
-- Adds a DNS name for Kubernetes to `/etc/hosts`.
-- Creates a symlink from `/usr/local/bin/com.docker.cli` to `/usr/bin/docker`. 
-  This is because the classic Docker CLI is installed at `/usr/bin/docker`. 
-  The Docker Desktop installer also installs a Docker CLI binary that includes cloud-integration capabilities and is essentially a wrapper for the Compose CLI, at `/usr/local/bin/com.docker.cli`. 
-  The symlink ensures that the wrapper can access the classic Docker CLI.
-
-**Step 3: Launch Docker Desktop**
-Open a terminal and run the following command:
+3. Install Docker package:
 ```bash
-systemctl --user start docker-desktop
-```
-When Docker Desktop starts, it creates a dedicated [context](https://docs.docker.com/engine/context/working-with-contexts) that the Docker CLI can use as a target and sets it as the current context in use. This is to avoid a clash with a local Docker Engine that may be running on the Linux host and using the default context. On shutdown, Docker Desktop resets the current context to the previous one.
-
-The Docker Desktop installer updates Docker Compose and the Docker CLI binaries on the host. It installs Docker Compose V2 and gives users the choice to link it as docker-compose from the Settings panel. Docker Desktop installs the new Docker CLI binary that includes cloud-integration capabilities in `/usr/local/bin/com.docker.cli` and creates a symlink to the classic Docker CLI at `/usr/local/bin`.
-
-After you’ve successfully installed Docker Desktop, you can check the versions of these binaries by running the following commands:
-```bash
-docker compose version
-```
-```bash
-docker --version
-```
-```bash
-docker version
-```
-To enable Docker Desktop to start on sign in run the following command below:
-```bash
-systemctl --user enable docker-desktop
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
-To stop Docker Desktop, run the follwoing command below:
+4. Verify that the installation is successful by running the `hello-world` image:
 ```bash
-systemctl --user stop docker-desktop
+sudo docker run hello-world
 ```
+This command downloads a test image and runs it in a container. When the container runs, it prints a confirmation message and exits.
 
-# Upgrade Docker Desktop
-When a new version for Docker Desktop is released, the Docker UI shows a notification. You need to download the new package each time you want to upgrade Docker Desktop and run:
+You have now successfully installed and started Docker Engine.
 
-To upgrade Docker Desktop run the following command below:
-```bash
-sudo apt-get install ./docker-desktop-amd64.deb
-```
 
-### 3. Install Winux Dependencies
+### 2. Install Winux Dependencies
 
 Install all required dependencies for Winux:
 ```bash
