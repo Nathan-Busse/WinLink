@@ -31,7 +31,7 @@ sudo reboot
 
 If you plan to use the Docker backend (recommended for running Windows/Office in a container), install Docker:
 ```bash
-sudo apt install -y docker.io
+
 ```
 
 ```bash
@@ -53,6 +53,11 @@ Install all required dependencies for Winux:
 ```bash
 sudo apt install -y curl dialog freerdp3-x11 git iproute2 libnotify-bin netcat-openbsd
 ```
+
+#WARNING
+**DO NOT RUN THE ```bash sudo apt autopurge curl dialog freerdp3-x11 git iproute2 libnotify-bin netcat-openbsd``` COMMAND TO UNINSTALL IF YOU MADE A MISTAKE IT WILL DELETE YOUR GPU DRIVER AND DESKTOP ENVIRONMENT.
+
+it is recoverable with a bootable usb of linux mint
 
 ### 4. (Optional) Install All Dependencies via Python Script
 
