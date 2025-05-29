@@ -2,10 +2,9 @@
 
 Inspired by [winapps](https://github.com/winapps-org/winapps)
 
-Winux shares the same idea as winux, but focuses on beginner Linux users, lightweight performance, and an automated, streamlined setup GUI—similar to the experience of setting up Linux distros like Raspberry Pi OS Desktop.
+Winux shares the same idea as winapps, but focuses on bridinging the gap between Microsoft windows appliciations and Linux , lightweight performance, and an automated, streamlined setup GUI—similar to the experience of setting up Linux distros like Raspberry Pi OS Desktop.
 
-My intention is not to rip off winux, but to unlock its full potential for all users, regardless of their Linux experience.
-
+My intention is not to rip off winapps, but to expand the core idea and unlock its full potential.
 Winux also aims to make Microsoft Office and Autodesk Fusion accessible to Linux users without a hypervisor, using containers to access the Office suite as though it were native to your Linux OS of choice.
 
 ---
