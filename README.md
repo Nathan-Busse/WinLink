@@ -1,10 +1,10 @@
 # WinLink
 
-Inspired by [winapps](https://github.com/winapps-org/winapps)
+Inspired by [winlink](https://github.com/winlink-org/winlink)
 
-WinLink shares the same idea as winapps, but focuses on bridinging the gap between Microsoft windows appliciations and Linux , lightweight performance, and an automated, streamlined setup GUI—similar to the experience of setting up Linux distros like Raspberry Pi OS Desktop.
+WinLink shares the same idea as winlink, but focuses on bridinging the gap between Microsoft windows appliciations and Linux , lightweight performance, and an automated, streamlined setup GUI—similar to the experience of setting up Linux distros like Raspberry Pi OS Desktop.
 
-My intention is not to rip off winapps, but to expand the core idea and unlock its full potential.
+My intention is not to rip off winlink, but to expand the core idea and unlock its full potential.
 WinLink also aims to make Microsoft Office and Autodesk Fusion accessible to Linux users without a hypervisor, using containers to access the Office suite as though it were native to your Linux OS of choice.
 
 ---
@@ -92,6 +92,67 @@ You have now successfully installed and started Docker Engine.
 ```bash
 sudo reboot
 ```
+
+
+> [!IMPORTANT]
+> The iptables kernel module must be loaded for folder sharing with the host to work.
+> Check that the output of `lsmod | grep ip_tables` and `lsmod | grep iptable_nat` is non empty.
+> If the output of one of the previous command is empty, run `echo -e "ip_tables\niptable_nat" | sudo tee /etc/modules-load.d/iptables.conf` and reboot.
+
+## `Docker`
+### Installation
+You can find a guide for installing `Docker Engine` [here](https://docs.docker.com/engine/install/).
+
+### Setup `Docker` Container
+WinLink utilises `docker compose` to configure Windows VMs. A template [`compose.yaml`](../compose.yaml) is provided.
+
+Prior to installing Windows, you can modify the RAM and number of CPU cores available to the Windows VM by changing `RAM_SIZE` and `CPU_CORES` within `compose.yaml`.
+
+It is also possible to specify the version of Windows you wish to install within `compose.yaml` by modifying `VERSION`.
+
+Please refer to the [original GitHub repository](https://github.com/dockur/windows) for more information on additional configuration options.
+
+> [!NOTE]
+> If you want to undo all your changes and start from scratch, run the following. For `podman`, replace `docker compose` with `podman-compose`.
+> ```bash
+> docker compose down --rmi=all --volumes
+> ```
+
+### Installing Windows
+You can initiate the Windows installation using `docker compose`.
+```bash
+cd winlink
+docker compose --file ./compose.yaml up
+```
+
+You can then access the Windows virtual machine via a VNC connection to complete the Windows setup by navigating to http://127.0.0.1:8006 in your web browser.
+
+### Changing `compose.yaml`
+Changes to `compose.yaml` require the container to be removed and re-created. This should __NOT__ affect your data.
+
+```bash
+# Stop and remove the existing container.
+docker compose --file ~/.config/winlink/compose.yaml down
+
+# Remove the existing FreeRDP certificate (if required).
+# Note: A new certificate will be created when connecting via RDP for the first time.
+rm ~/.config/freerdp/server/127.0.0.1_3389.pem
+
+# Re-create the container with the updated configuration.
+# Add the -d flag at the end to run the container in the background.
+docker compose --file ~/.config/winlink/compose.yaml up
+```
+
+### Subsequent Use
+```bash
+docker compose --file ~/.config/winlink/compose.yaml start # Power on the Windows VM
+docker compose --file ~/.config/winlink/compose.yaml pause # Pause the Windows VM
+docker compose --file ~/.config/winlink/compose.yaml unpause # Resume the Windows VM
+docker compose --file ~/.config/winlink/compose.yaml restart # Restart the Windows VM
+docker compose --file ~/.config/winlink/compose.yaml stop # Gracefully shut down the Windows VM
+docker compose --file ~/.config/winlink/compose.yaml kill # Force shut down the Windows VM
+```
+
 
 ### 3. Clone WinLink repository
 1. In a new terminal window run the following command to take you to root directory:
