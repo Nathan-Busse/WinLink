@@ -1,6 +1,6 @@
 # WinLink
 
-Inspired by [winlink](https://github.com/winlink-org/winlink)
+Inspired by [winlink](https://github.com/Nathan-Busse/winlink)
 
 WinLink shares the same idea as winlink, but focuses on bridinging the gap between Microsoft windows appliciations and Linux , lightweight performance, and an automated, streamlined setup GUI—similar to the experience of setting up Linux distros like Raspberry Pi OS Desktop.
 
@@ -209,3 +209,41 @@ cd winlink
 ```bash
 bash compose.sh
 ```
+
+# WinLink-Launcher
+
+## Installation Instructions
+### Dependencies
+WinLink should have already brought in everything that the script will need, however a package known as `yad` may be missing. You can use the instructions below to install it:
+
+#### Debian
+    sudo apt install yad
+#### Fedora/RHEL
+    sudo dnf install yad
+#### Arch
+    sudo pacman -Syu --needed yad
+#### OpenSUSE
+    sudo zypper install yad
+    
+### Installation
+1. Install [`WinLink`](https://github.com/Nathan-Busse/winlink).
+
+2. Navigate to the `WinLink-Launcher` folder.
+
+    ```bash
+    cd ~/.local/bin/winlink-src/WinLink-Launcher
+    ```
+
+3. Mark the `WinLink-Launcher.sh` script as executable. 
+
+    ```bash
+    chmod +x WinLink-Launcher.sh
+    ```
+
+4. Run `WinLink-Launcher.sh`.
+
+    ```bash
+    ./WinLink-Launcher.sh
+    ```
+
+5. (Optional) You can also open `winlink-launcher.service` with a text editor and use the instructions within to configure a user service that can automatically start the WinLink Launcher on boot!
