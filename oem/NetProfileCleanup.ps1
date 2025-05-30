@@ -24,7 +24,7 @@ foreach ($profile in $profiles) {
 
     if ($profileName -eq $currentProfile) {
         # Update the profile name
-        Set-ItemProperty -Path $profilePath -Name "ProfileName" -Value "Winux"
-        Write-Host "Renamed profile to: Winux"
+        Set-ItemProperty -Path $profilePath -Name "ProfileName" -Value "WinLink"
+        Write-Host "Renamed profile to: WinLink"
     }
 }

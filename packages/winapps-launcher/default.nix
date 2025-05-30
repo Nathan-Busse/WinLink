@@ -13,12 +13,12 @@ let
   hash = "sha256-Hy/o5IY9HmTWaX54Ek5ABmppPpzgM+MdCrhzEzVmtwY=";
 in
 stdenv.mkDerivation rec {
-  pname = "winux-launcher";
+  pname = "winlink-launcher";
   version = "0-unstable-2025-03-11";
 
   src = fetchFromGitHub {
-    owner = "winux-org";
-    repo = "Winux-Launcher";
+    owner = "Nathan-Busse";
+    repo = "WinLink-Launcher";
 
     inherit rev hash;
   };
@@ -26,13 +26,13 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ makeWrapper ];
   buildInputs = [
     yad
-    (callPackage ../winux { })
+    (callPackage ../winlink { })
   ];
 
-  patches = [ ./Winux-Launcher.patch ];
+  patches = [ ./WinLink-Launcher.patch ];
 
   postPatch = ''
-    substituteAllInPlace Winux-Launcher.sh
+    substituteAllInPlace WinLink-Launcher.sh
   '';
 
   installPhase = ''
@@ -41,10 +41,10 @@ stdenv.mkDerivation rec {
     mkdir -p $out
     cp -r ./Icons $out/Icons
 
-    install -m755 -D Winux-Launcher.sh $out/bin/winux-launcher
-    install -Dm444 -T Icons/AppIcon.svg $out/share/pixmaps/winux.svg
+    install -m755 -D WinLink-Launcher.sh $out/bin/winlink-launcher
+    install -Dm444 -T Icons/AppIcon.svg $out/share/pixmaps/winlink.svg
 
-    wrapProgram $out/bin/winux-launcher \
+    wrapProgram $out/bin/winlink-launcher \
       --set LIBVIRT_DEFAULT_URI "qemu:///system" \
       --prefix PATH : "${lib.makeBinPath buildInputs}"
 
@@ -53,19 +53,19 @@ stdenv.mkDerivation rec {
 
   desktopItems = [
     (makeDesktopItem {
-      name = "winux";
-      exec = "winux-launcher";
-      icon = "winux";
+      name = "winlink";
+      exec = "winlink-launcher";
+      icon = "winlink";
       comment = meta.description;
-      desktopName = "Winux";
+      desktopName = "WinLink";
       categories = [ "Utility" ];
     })
   ];
 
   meta = with lib; {
-    homepage = "https://github.com/winux-org/Winux-Launcher";
-    description = "Graphical launcher for Winux. Run Windows applications (including Microsoft 365 and Adobe Creative Cloud) on GNU/Linux with KDE, GNOME or XFCE, integrated seamlessly as if they were native to the OS. Wayland is currently unsupported.";
-    mainProgram = "winux-launcher";
+    homepage = "https://github.com/Nathan-Busse/WinLink-Launcher";
+    description = "Graphical launcher for WinLink. Run Windows applications (including Microsoft 365 and Adobe Creative Cloud) on GNU/Linux with KDE, GNOME or XFCE, integrated seamlessly as if they were native to the OS. Wayland is currently unsupported.";
+    mainProgram = "winlink-launcher";
     platforms = platforms.linux;
     license = licenses.gpl3;
   };

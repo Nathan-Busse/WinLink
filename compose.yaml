@@ -1,10 +1,10 @@
 # For documentation, FAQ, additional configuration options and technical help, visit: https://github.com/dockur/windows
 
-name: "winux" # Docker Compose Project Name.
+name: "winlink" # Docker Compose Project Name.
 volumes:
   # Create Volume 'data'.
-  # Located @ '/var/lib/docker/volumes/winux_data/_data' (Docker).
-  # Located @ '/var/lib/containers/storage/volumes/winux_data/_data' or '~/.local/share/containers/storage/volumes/winux_data/_data' (Podman).
+  # Located @ '/var/lib/docker/volumes/winlink_data/_data' (Docker).
+  # Located @ '/var/lib/containers/storage/volumes/winlink_data/_data' or '~/.local/share/containers/storage/volumes/winlink_data/_data' (Podman).
   data:
 services:
   windows:

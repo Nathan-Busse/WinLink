@@ -1,11 +1,11 @@
-# Winux
+# WinLink
 
 Inspired by [winapps](https://github.com/winapps-org/winapps)
 
-Winux shares the same idea as winapps, but focuses on bridinging the gap between Microsoft windows appliciations and Linux , lightweight performance, and an automated, streamlined setup GUI—similar to the experience of setting up Linux distros like Raspberry Pi OS Desktop.
+WinLink shares the same idea as winapps, but focuses on bridinging the gap between Microsoft windows appliciations and Linux , lightweight performance, and an automated, streamlined setup GUI—similar to the experience of setting up Linux distros like Raspberry Pi OS Desktop.
 
 My intention is not to rip off winapps, but to expand the core idea and unlock its full potential.
-Winux also aims to make Microsoft Office and Autodesk Fusion accessible to Linux users without a hypervisor, using containers to access the Office suite as though it were native to your Linux OS of choice.
+WinLink also aims to make Microsoft Office and Autodesk Fusion accessible to Linux users without a hypervisor, using containers to access the Office suite as though it were native to your Linux OS of choice.
 
 ---
 
@@ -88,18 +88,58 @@ This command downloads a test image and runs it in a container. When the contain
 
 You have now successfully installed and started Docker Engine.
 
+5. Reboot your computer with the following command:
+```bash
+sudo reboot
+```
 
-### 2. Install Winux Dependencies
+### 3. Clone WinLink repository
+1. In a new terminal window run the following command to take you to root directory:
+```bash
+cd
+```
 
-Install all required dependencies for Winux:
+2. If you have not doen so already install `git` using the following command:
+```bash 
+sudo apt isntall git
+```
+
+3. Reboot your computer by running the following command:
+```bash
+sudo reboot
+```
+4. In a new terminal window run the following command to make sure you are in the `root` directory:
+```bash
+cd
+```
+
+5. Next run the following command:
+```bash 
+git clone https://github.com/Nathan-Busse/WinLink
+```
+
+6. It is a good habit to reboot after installing or reoming packages in linux:
+```bash
+sudo reboot
+```
+
+### 3. Install WinLink Dependencies
+1. In a new terminal window run the following command to ensure you are in the `root` directory:
+```bash 
+cd
+```
+
+# WARNING
+### Read before proceeding:
+**`DO NOT` RUN THE ```bash sudo apt install curl dialog freerdp3-x11 git iproute2 libnotify-bin netcat-openbsd``` COMMAND `BEFORE` INSTALLING `DOCKER ENGINE` `FIRST`!** 
+
+**`You` have been `WARNED`!**
+
+2. Now we need to install all required dependencies for WinLink by running this command:
 ```bash
 sudo apt install -y curl dialog freerdp3-x11 git iproute2 libnotify-bin netcat-openbsd
 ```
 
-#WARNING
-**DO NOT RUN THE ```bash sudo apt autopurge curl dialog freerdp3-x11 git iproute2 libnotify-bin netcat-openbsd``` COMMAND TO UNINSTALL IF YOU MADE A MISTAKE IT WILL DELETE YOUR GPU DRIVER AND DESKTOP ENVIRONMENT.
-
-it is recoverable with a bootable usb of linux mint
 
 ### 4. (Optional) Install All Dependencies via Python Script
 
@@ -110,7 +150,7 @@ Run the script `compose.sh` located in the root directory:
 
 **Step 1:**
 ```bash
-cd winux
+cd winlink
 ```
 
 **Step 2:**

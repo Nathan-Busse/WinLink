@@ -18,8 +18,8 @@ readonly WARNING_TEXT="\033[1;33m"    # Bold + Orange/Yellow
 # ERROR CODES
 readonly EC_FAILED_CD="1"        # Failed to change directory to location of script.
 readonly EC_BAD_ARGUMENT="2"     # Unsupported argument passed to script.
-readonly EC_EXISTING_INSTALL="3" # Existing conflicting Winux installation.
-readonly EC_NO_CONFIG="4"        # Absence of a valid Winux configuration file.
+readonly EC_EXISTING_INSTALL="3" # Existing conflicting WinLink installation.
+readonly EC_NO_CONFIG="4"        # Absence of a valid WinLink configuration file.
 readonly EC_MISSING_DEPS="5"     # Missing dependencies.
 readonly EC_NO_SUDO="6"          # Insufficient privilages to invoke superuser access.
 readonly EC_NOT_IN_GROUP="7"     # Current user not in group 'libvirt' and/or 'kvm'.
@@ -35,20 +35,20 @@ readonly EC_INVALID_FLAVOR="16"  # Backend specified is not 'libvirt', 'docker' 
 
 # PATHS
 # 'BIN'
-readonly SYS_BIN_PATH="/usr/local/bin"                  # UNIX path to 'bin' directory for a '--system' Winux installation.
-readonly USER_BIN_PATH="${HOME}/.local/bin"             # UNIX path to 'bin' directory for a '--user' Winux installation.
-readonly USER_BIN_PATH_WIN='\\tsclient\home\.local\bin' # WINDOWS path to 'bin' directory for a '--user' Winux installation.
+readonly SYS_BIN_PATH="/usr/local/bin"                  # UNIX path to 'bin' directory for a '--system' WinLink installation.
+readonly USER_BIN_PATH="${HOME}/.local/bin"             # UNIX path to 'bin' directory for a '--user' WinLink installation.
+readonly USER_BIN_PATH_WIN='\\tsclient\home\.local\bin' # WINDOWS path to 'bin' directory for a '--user' WinLink installation.
 # 'SOURCE'
-readonly SYS_SOURCE_PATH="${SYS_BIN_PATH}/winux-src" # UNIX path to Winux source directory for a '--system' Winux installation.
-readonly USER_SOURCE_PATH="${USER_BIN_PATH}/winux-src" # UNIX path to Winux source directory for a '--system' Winux installation.
+readonly SYS_SOURCE_PATH="${SYS_BIN_PATH}/winlink-src" # UNIX path to WinLink source directory for a '--system' WinLink installation.
+readonly USER_SOURCE_PATH="${USER_BIN_PATH}/winlink-src" # UNIX path to WinLink source directory for a '--system' WinLink installation.
 # 'APP'
-readonly SYS_APP_PATH="/usr/share/applications"                        # UNIX path to 'applications' directory for a '--system' Winux installation.
-readonly USER_APP_PATH="${HOME}/.local/share/applications"             # UNIX path to 'applications' directory for a '--user' Winux installation.
-readonly USER_APP_PATH_WIN='\\tsclient\home\.local\share\applications' # WINDOWS path to 'applications' directory for a '--user' Winux installation.
+readonly SYS_APP_PATH="/usr/share/applications"                        # UNIX path to 'applications' directory for a '--system' WinLink installation.
+readonly USER_APP_PATH="${HOME}/.local/share/applications"             # UNIX path to 'applications' directory for a '--user' WinLink installation.
+readonly USER_APP_PATH_WIN='\\tsclient\home\.local\share\applications' # WINDOWS path to 'applications' directory for a '--user' WinLink installation.
 # 'APPDATA'
-readonly SYS_APPDATA_PATH="/usr/local/share/winux"                  # UNIX path to 'application data' directory for a '--system' Winux installation.
-readonly USER_APPDATA_PATH="${HOME}/.local/share/winux"             # UNIX path to 'application data' directory for a '--user' Winux installation.
-readonly USER_APPDATA_PATH_WIN='\\tsclient\home\.local\share\winux' # WINDOWS path to 'application data' directory for a '--user' Winux installation.
+readonly SYS_APPDATA_PATH="/usr/local/share/winlink"                  # UNIX path to 'application data' directory for a '--system' WinLink installation.
+readonly USER_APPDATA_PATH="${HOME}/.local/share/winlink"             # UNIX path to 'application data' directory for a '--user' WinLink installation.
+readonly USER_APPDATA_PATH_WIN='\\tsclient\home\.local\share\winlink' # WINDOWS path to 'application data' directory for a '--user' WinLink installation.
 # 'Installed Batch Script'
 readonly BATCH_SCRIPT_PATH="${USER_APPDATA_PATH}/installed.bat"          # UNIX path to a batch script used to search Windows for applications.
 readonly BATCH_SCRIPT_PATH_WIN="${USER_APPDATA_PATH_WIN}\\installed.bat" # WINDOWS path to a batch script used to search Windows for applications.
@@ -67,8 +67,8 @@ readonly DETECTED_FILE_PATH_WIN="${USER_APPDATA_PATH_WIN}\\detected" # WINDOWS p
 # 'FreeRDP Connection Test File'
 readonly TEST_PATH="${USER_APPDATA_PATH}/FreeRDP_Connection_Test"          # UNIX path to temporary file whose existence is used to confirm a successful RDP connection was established.
 readonly TEST_PATH_WIN="${USER_APPDATA_PATH_WIN}\\FreeRDP_Connection_Test" # WINDOWS path to temporary file whose existence is used to confirm a successful RDP connection was established.
-# 'Winux Configuration File'
-readonly CONFIG_PATH="${HOME}/winux/winux.conf" # UNIX path to the Winux configuration file.
+# 'WinLink Configuration File'
+readonly CONFIG_PATH="${HOME}/winlink/winlink.conf" # UNIX path to the WinLink configuration file.
 # 'Inquirer Bash Script'
 readonly INQUIRER_PATH="./install/inquirer.sh" # UNIX path to the 'inquirer' script, which is used to produce selection menus.
 
@@ -83,12 +83,12 @@ OPT_USER=0      # Set to '1' if the user specifies '--user'.
 OPT_UNINSTALL=0 # Set to '1' if the user specifies '--uninstall'.
 OPT_AOSA=0      # Set to '1' if the user specifies '--setupAllOfficiallySupportedApps'.
 
-# WINUX CONFIGURATION FILE
+# WINLINK CONFIGURATION FILE
 RDP_USER=""          # Imported variable.
 RDP_PASS=""          # Imported variable.
 RDP_DOMAIN=""        # Imported variable.
 RDP_IP=""            # Imported variable.
-VM_NAME="Winux" # Name of the Windows VM (FOR 'libvirt' ONLY).
+VM_NAME="WinLink" # Name of the Windows VM (FOR 'libvirt' ONLY).
 WAFLAVOR="docker"    # Imported variable.
 RDP_SCALE=100        # Imported variable.
 RDP_FLAGS=""         # Imported variable.
@@ -130,17 +130,17 @@ function waTerminateScript() {
 # Role: Displays usage information for the script.
 function waUsage() {
     echo -e "Usage:
-  ${COMMAND_TEXT}    --user${CLEAR_TEXT}                                        # Install Winux and selected applications in ${HOME}
-  ${COMMAND_TEXT}    --system${CLEAR_TEXT}                                      # Install Winux and selected applications in /usr
-  ${COMMAND_TEXT}    --user --setupAllOfficiallySupportedApps${CLEAR_TEXT}      # Install Winux and all officially supported applications in ${HOME}
-  ${COMMAND_TEXT}    --system --setupAllOfficiallySupportedApps${CLEAR_TEXT}    # Install Winux and all officially supported applications in /usr
+  ${COMMAND_TEXT}    --user${CLEAR_TEXT}                                        # Install WinLink and selected applications in ${HOME}
+  ${COMMAND_TEXT}    --system${CLEAR_TEXT}                                      # Install WinLink and selected applications in /usr
+  ${COMMAND_TEXT}    --user --setupAllOfficiallySupportedApps${CLEAR_TEXT}      # Install WinLink and all officially supported applications in ${HOME}
+  ${COMMAND_TEXT}    --system --setupAllOfficiallySupportedApps${CLEAR_TEXT}    # Install WinLink and all officially supported applications in /usr
   ${COMMAND_TEXT}    --user --uninstall${CLEAR_TEXT}                            # Uninstall everything in ${HOME}
   ${COMMAND_TEXT}    --system --uninstall${CLEAR_TEXT}                          # Uninstall everything in /usr
   ${COMMAND_TEXT}    --help${CLEAR_TEXT}                                        # Display this usage message."
 }
 
 # Name: 'waGetSourceCode'
-# Role: Grab the Winux source code using Git.
+# Role: Grab the WinLink source code using Git.
 function waGetSourceCode() {
     # Declare variables.
     local SCRIPT_DIR_PATH="" # Stores the absolute path of the directory containing the script.
@@ -148,17 +148,17 @@ function waGetSourceCode() {
     # Determine the absolute path to the directory containing the script.
     SCRIPT_DIR_PATH=$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")
 
-    # Check if winux is currently installed on $SOURCE_PATH
-    if [[ -f "$SCRIPT_DIR_PATH/winux" && "$SCRIPT_DIR_PATH" -ne "$SOURCE_PATH" ]]; then
+    # Check if winlink is currently installed on $SOURCE_PATH
+    if [[ -f "$SCRIPT_DIR_PATH/winlink" && "$SCRIPT_DIR_PATH" -ne "$SOURCE_PATH" ]]; then
         # Display a warning.
-        echo -e "${WARNING_TEXT}[WARNING]${CLEAR_TEXT} You are running a Winux installation located outside of default location '${SOURCE_PATH}'. A new installation will be created."
+        echo -e "${WARNING_TEXT}[WARNING]${CLEAR_TEXT} You are running a WinLink installation located outside of default location '${SOURCE_PATH}'. A new installation will be created."
         echo -e "${WARNING_TEXT}[WARNING]${CLEAR_TEXT} You might want to remove your old installation on '${SCRIPT_DIR_PATH}'."
     fi
 
     if [[ ! -d "$SOURCE_PATH" ]]; then
-        $SUDO git clone --recurse-submodules --remote-submodules https://github.com/Nathan-Busse/winux.git "$SOURCE_PATH"
+        $SUDO git clone --recurse-submodules --remote-submodules https://github.com/Nathan-Busse/winlink.git "$SOURCE_PATH"
     else
-        echo -e "${INFO_TEXT}Winux installation already present at ${CLEAR_TEXT}${COMMAND_TEXT}${SOURCE_PATH}${CLEAR_TEXT}${INFO_TEXT}. Updating...${CLEAR_TEXT}"
+        echo -e "${INFO_TEXT}WinLink installation already present at ${CLEAR_TEXT}${COMMAND_TEXT}${SOURCE_PATH}${CLEAR_TEXT}${INFO_TEXT}. Updating...${CLEAR_TEXT}"
         $SUDO git -C "$SOURCE_PATH" pull --no-rebase
     fi
 
@@ -196,7 +196,7 @@ function waGetInquirer() {
         INQUIRER="/tmp/waInquirer.sh"
         rm -f "$INQUIRER"
 
-        curl -o "$INQUIRER" "https://raw.githubusercontent.com/Nathan-Busse/winux/main/install/inquirer.sh"
+        curl -o "$INQUIRER" "https://raw.githubusercontent.com/Nathan-Busse/winlink/main/install/inquirer.sh"
     fi
 
     # shellcheck source=/dev/null # Exclude this file from being checked by ShellCheck.
@@ -250,7 +250,7 @@ function waCheckInput() {
     else
         # Install vs. uninstall?
         OPTIONS=("Install" "Uninstall")
-        inqMenu "Install or uninstall Winux?" OPTIONS SELECTED_OPTION
+        inqMenu "Install or uninstall WinLink?" OPTIONS SELECTED_OPTION
 
         # Set flags.
         if [[ $SELECTED_OPTION == "Uninstall" ]]; then
@@ -259,7 +259,7 @@ function waCheckInput() {
 
         # User vs. system?
         OPTIONS=("Current User" "System")
-        inqMenu "Configure Winux for the current user '$(whoami)' or the whole system?" OPTIONS SELECTED_OPTION
+        inqMenu "Configure WinLink for the current user '$(whoami)' or the whole system?" OPTIONS SELECTED_OPTION
 
         # Set flags.
         if [[ $SELECTED_OPTION == "Current User" ]]; then
@@ -372,25 +372,25 @@ function waConfigurePathsAndPermissions() {
 }
 
 # Name: 'waCheckExistingInstall'
-# Role: Identifies any existing Winux installations that may conflict with the new installation.
+# Role: Identifies any existing WinLink installations that may conflict with the new installation.
 function waCheckExistingInstall() {
     # Print feedback.
-    echo -n "Checking for existing conflicting Winux installations... "
+    echo -n "Checking for existing conflicting WinLink installations... "
 
     # Check for an existing 'user' installation.
-    if [[ -f "${USER_BIN_PATH}/winux" || -d "${USER_SOURCE_PATH}/winux" ]]; then
+    if [[ -f "${USER_BIN_PATH}/winlink" || -d "${USER_SOURCE_PATH}/winlink" ]]; then
         # Complete the previous line.
         echo -e "${FAIL_TEXT}Failed!${CLEAR_TEXT}\n"
 
         # Display the error type.
-        echo -e "${ERROR_TEXT}ERROR:${CLEAR_TEXT} ${BOLD_TEXT}EXISTING 'USER' WINUX INSTALLATION.${CLEAR_TEXT}"
+        echo -e "${ERROR_TEXT}ERROR:${CLEAR_TEXT} ${BOLD_TEXT}EXISTING 'USER' WINLINK INSTALLATION.${CLEAR_TEXT}"
 
         # Display the error details.
-        echo -e "${INFO_TEXT}A previous Winux installation was detected for the current user.${CLEAR_TEXT}"
+        echo -e "${INFO_TEXT}A previous WinLink installation was detected for the current user.${CLEAR_TEXT}"
 
         # Display the suggested action(s).
         echo "--------------------------------------------------------------------------------"
-        echo -e "Please remove the existing Winux installation using ${COMMAND_TEXT}winux-setup --user --uninstall${CLEAR_TEXT}."
+        echo -e "Please remove the existing WinLink installation using ${COMMAND_TEXT}winlink-setup --user --uninstall${CLEAR_TEXT}."
         echo "--------------------------------------------------------------------------------"
 
         # Terminate the script.
@@ -398,19 +398,19 @@ function waCheckExistingInstall() {
     fi
 
     # Check for an existing 'system' installation.
-    if [[ -f "${SYS_BIN_PATH}/winux" || -d "${SYS_SOURCE_PATH}/winux" ]]; then
+    if [[ -f "${SYS_BIN_PATH}/winlink" || -d "${SYS_SOURCE_PATH}/winlink" ]]; then
         # Complete the previous line.
         echo -e "${FAIL_TEXT}Failed!${CLEAR_TEXT}\n"
 
         # Display the error type.
-        echo -e "${ERROR_TEXT}ERROR:${CLEAR_TEXT} ${BOLD_TEXT}EXISTING 'SYSTEM' WINUX INSTALLATION.${CLEAR_TEXT}"
+        echo -e "${ERROR_TEXT}ERROR:${CLEAR_TEXT} ${BOLD_TEXT}EXISTING 'SYSTEM' WINLINK INSTALLATION.${CLEAR_TEXT}"
 
         # Display the error details.
-        echo -e "${INFO_TEXT}A previous system-wide Winux installation was detected.${CLEAR_TEXT}"
+        echo -e "${INFO_TEXT}A previous system-wide WinLink installation was detected.${CLEAR_TEXT}"
 
         # Display the suggested action(s).
         echo "--------------------------------------------------------------------------------"
-        echo -e "Please remove the existing Winux installation using ${COMMAND_TEXT}winux-setup --system --uninstall${CLEAR_TEXT}."
+        echo -e "Please remove the existing WinLink installation using ${COMMAND_TEXT}winlink-setup --system --uninstall${CLEAR_TEXT}."
         echo "--------------------------------------------------------------------------------"
 
         # Terminate the script.
@@ -455,10 +455,10 @@ function waFixScale() {
 }
 
 # Name: 'waLoadConfig'
-# Role: Loads settings specified within the Winux configuration file.
+# Role: Loads settings specified within the WinLink configuration file.
 function waLoadConfig() {
     # Print feedback.
-    echo -n "Attempting to load Winux configuration file... "
+    echo -n "Attempting to load WinLink configuration file... "
 
     if [ ! -f "$CONFIG_PATH" ]; then
         # Complete the previous line.
@@ -468,18 +468,17 @@ function waLoadConfig() {
         echo -e "${ERROR_TEXT}ERROR:${CLEAR_TEXT} ${BOLD_TEXT}MISSING CONFIGURATION FILE.${CLEAR_TEXT}"
 
         # Display the error details.
-        echo -e "${INFO_TEXT}A valid Winux configuration file was not found.${CLEAR_TEXT}"
+        echo -e "${INFO_TEXT}A valid WinLink configuration file was not found.${CLEAR_TEXT}"
 
         # Display the suggested action(s).
         echo "--------------------------------------------------------------------------------"
         echo -e "Please create a configuration file at ${COMMAND_TEXT}${CONFIG_PATH}${CLEAR_TEXT}."
-        echo -e "See https://github.com/Nathan-Busse/winux?tab=readme-ov-file#step-3-create-a-winux-configuration-file"
         echo "--------------------------------------------------------------------------------"
 
         # Terminate the script.
         return "$EC_NO_CONFIG"
     else
-        # Load the Winux configuration file.
+        # Load the WinLink configuration file.
         # shellcheck source=/dev/null # Exclude this file from being checked by ShellCheck.
         source "$CONFIG_PATH"
     fi
@@ -565,7 +564,7 @@ function waCheckScriptDependencies() {
 }
 
 # Name: 'waCheckInstallDependencies'
-# Role: Terminate script if dependencies required to install Winux are missing.
+# Role: Terminate script if dependencies required to install WinLink are missing.
 function waCheckInstallDependencies() {
     # Declare variables.
     local FREERDP_MAJOR_VERSION="" # Stores the major version of the installed copy of FreeRDP.
@@ -917,7 +916,7 @@ function waCheckContainerRunning() {
     local COMPOSE_COMMAND=""
 
     # Determine the state of the container.
-    CONTAINER_STATE=$("$WAFLAVOR" ps --all --filter name="Winux" --format '{{.Status}}')
+    CONTAINER_STATE=$("$WAFLAVOR" ps --all --filter name="WinLink" --format '{{.Status}}')
     CONTAINER_STATE=${CONTAINER_STATE,,} # Convert the string to lowercase.
     CONTAINER_STATE=${CONTAINER_STATE%% *} # Extract the first word.
 
@@ -941,7 +940,7 @@ function waCheckContainerRunning() {
         # Display the suggested action(s).
         echo "--------------------------------------------------------------------------------"
         echo "Please ensure Windows is powered on:"
-        echo -e "${COMMAND_TEXT}${COMPOSE_COMMAND} --file ~/.config/winux/compose.yaml start${CLEAR_TEXT}"
+        echo -e "${COMMAND_TEXT}${COMPOSE_COMMAND} --file ~/.config/winlink/compose.yaml start${CLEAR_TEXT}"
         echo "--------------------------------------------------------------------------------"
 
         # Terminate the script.
@@ -1000,7 +999,7 @@ function waCheckPortOpen() {
 
         # Display the suggested action(s).
         echo "--------------------------------------------------------------------------------"
-        echo "Please ensure Remote Desktop is configured on Windows as per the Winux README."
+        echo "Please ensure Remote Desktop is configured on Windows as per the WinLink README."
         echo "--------------------------------------------------------------------------------"
 
         # Terminate the script.
@@ -1088,13 +1087,13 @@ function waCheckRDPAccess() {
         echo "--------------------------------------------------------------------------------"
         echo -e "Please view the log at ${COMMAND_TEXT}${FREERDP_LOG}${CLEAR_TEXT}."
         echo "Troubleshooting Tips:"
-        echo "  - Ensure the user is logged out of Windows prior to initiating the Winux installation."
-        echo "  - Ensure the credentials within the Winux configuration file are correct."
+        echo "  - Ensure the user is logged out of Windows prior to initiating the WinLink installation."
+        echo "  - Ensure the credentials within the WinLink configuration file are correct."
         echo -e "  - Utilise a new certificate by removing relevant certificate(s) in ${COMMAND_TEXT}${HOME}/.config/freerdp/server${CLEAR_TEXT}."
         echo "  - If using 'libvirt', ensure the Windows VM is correctly named as specified within the README."
         echo "  - If using 'libvirt', ensure 'Remote Desktop' is enabled within the Windows VM."
         echo "  - If using 'libvirt', ensure you have merged 'RDPApps.reg' into the Windows VM's registry."
-        echo "  - If using 'libvirt', try logging into and back out of the Windows VM within 'virt-manager' prior to initiating the Winux installation."
+        echo "  - If using 'libvirt', try logging into and back out of the Windows VM within 'virt-manager' prior to initiating the WinLink installation."
         echo "--------------------------------------------------------------------------------"
 
         # Terminate the script.
@@ -1125,7 +1124,7 @@ function waFindInstalled() {
     # Make the output directory if required.
     mkdir -p "$USER_APPDATA_PATH"
 
-    # Remove temporary files from previous Winux installations.
+    # Remove temporary files from previous WinLink installations.
     rm -f "$BATCH_SCRIPT_PATH" "$TMP_INST_FILE_PATH" "$INST_FILE_PATH" "$PS_SCRIPT_HOME_PATH" "$DETECTED_FILE_PATH"
 
     # Copy PowerShell script to a directory within the user's home folder.
@@ -1239,11 +1238,11 @@ function waConfigureWindows() {
     # Populate variables.
     WIN_BASH="\
 #!/usr/bin/env bash
-${BIN_PATH}/winux windows"
+${BIN_PATH}/winlink windows"
     WIN_DESKTOP="\
 [Desktop Entry]
 Name=Windows
-Exec=${BIN_PATH}/winux windows %F
+Exec=${BIN_PATH}/winlink windows %F
 Terminal=false
 Type=Application
 Icon=${APPDATA_PATH}/icons/windows.svg
@@ -1290,13 +1289,13 @@ function waConfigureApp() {
     # Determine the content of the bash script for the application.
     APP_BASH="\
 #!/usr/bin/env bash
-${BIN_PATH}/winux ${1}"
+${BIN_PATH}/winlink ${1}"
 
     # Determine the content of the '.desktop' file for the application.
     APP_DESKTOP_FILE="\
 [Desktop Entry]
 Name=${NAME}
-Exec=${BIN_PATH}/winux ${1} %F
+Exec=${BIN_PATH}/winlink ${1} %F
 Terminal=false
 Type=Application
 Icon=${APP_ICON}
@@ -1522,7 +1521,7 @@ FULL_NAME=\"${PROGRAM_NAME}\"
 # Path to executable inside Windows
 WIN_EXECUTABLE=\"${EXES[$INDEX]}\"
 # GNOME Categories
-CATEGORIES=\"Winux\"
+CATEGORIES=\"WinLink\"
 # GNOME MIME Types
 MIME_TYPES=\"\""
 
@@ -1544,15 +1543,15 @@ MIME_TYPES=\"\""
 }
 
 # Name: 'waInstall'
-# Role: Installs Winux.
+# Role: Installs WinLink.
 function waInstall() {
     # Print feedback.
-    echo -e "${BOLD_TEXT}Installing Winux.${CLEAR_TEXT}"
+    echo -e "${BOLD_TEXT}Installing WinLink.${CLEAR_TEXT}"
 
-    # Check for existing conflicting Winux installations.
+    # Check for existing conflicting WinLink installations.
     waCheckExistingInstall
 
-    # Load the Winux configuration file.
+    # Load the WinLink configuration file.
     waLoadConfig
 
     # Check for missing dependencies.
@@ -1596,10 +1595,10 @@ function waInstall() {
         waCheckPortOpen
     else
         # Display the error type.
-        echo -e "${ERROR_TEXT}ERROR:${CLEAR_TEXT} ${BOLD_TEXT}INVALID WINUX BACKEND.${CLEAR_TEXT}"
+        echo -e "${ERROR_TEXT}ERROR:${CLEAR_TEXT} ${BOLD_TEXT}INVALID WINLINK BACKEND.${CLEAR_TEXT}"
 
         # Display the error details.
-        echo -e "${INFO_TEXT}An invalid Winux backend '${WAFLAVOR}' was specified.${CLEAR_TEXT}"
+        echo -e "${INFO_TEXT}An invalid WinLink backend '${WAFLAVOR}' was specified.${CLEAR_TEXT}"
 
         # Display the suggested action(s).
         echo "--------------------------------------------------------------------------------"
@@ -1625,9 +1624,9 @@ function waInstall() {
     # Check for installed applications.
     waFindInstalled
 
-    # Install the Winux bash scripts.
-    $SUDO ln -sf "${SOURCE_PATH}/bin/winux" "${BIN_PATH}/winux"
-    $SUDO ln -sf "${SOURCE_PATH}/setup.sh" "${BIN_PATH}/winux-setup"
+    # Install the WinLink bash scripts.
+    $SUDO ln -sf "${SOURCE_PATH}/bin/winlink" "${BIN_PATH}/winlink"
+    $SUDO ln -sf "${SOURCE_PATH}/setup.sh" "${BIN_PATH}/winlink-setup"
 
     # Configure the Windows RDP session application launcher.
     waConfigureWindows
@@ -1665,33 +1664,33 @@ function waEnsureOnPath() {
 }
 
 # Name: 'waUninstall'
-# Role: Uninstalls Winux.
+# Role: Uninstalls WinLink.
 function waUninstall() {
     # Print feedback.
     [ "$OPT_SYSTEM" -eq 1 ] && echo -e "${BOLD_TEXT}REMOVING SYSTEM INSTALLATION.${CLEAR_TEXT}"
     [ "$OPT_USER" -eq 1 ] && echo -e "${BOLD_TEXT}REMOVING USER INSTALLATION.${CLEAR_TEXT}"
 
     # Declare variables.
-    local WINUX_DESKTOP_FILES=()    # Stores a list of '.desktop' file paths.
-    local WINUX_APP_BASH_SCRIPTS=() # Stores a list of bash script paths.
+    local WINLINK_DESKTOP_FILES=()    # Stores a list of '.desktop' file paths.
+    local WINLINK_APP_BASH_SCRIPTS=() # Stores a list of bash script paths.
     local DESKTOP_FILE_NAME=""        # Stores the name of the '.desktop' file for the application.
     local BASH_SCRIPT_NAME=""         # Stores the name of the application.
 
-    # Remove the 'Winux' bash scripts.
-    $SUDO rm -f "${BIN_PATH}/winux"
-    $SUDO rm -f "${BIN_PATH}/winux-setup"
+    # Remove the 'WinLink' bash scripts.
+    $SUDO rm -f "${BIN_PATH}/winlink"
+    $SUDO rm -f "${BIN_PATH}/winlink-setup"
 
-    # Remove Winux configuration data, temporary files and logs.
+    # Remove WinLink configuration data, temporary files and logs.
     rm -rf "$USER_APPDATA_PATH"
 
     # Remove application icons and shortcuts.
     $SUDO rm -rf "$APPDATA_PATH"
 
-    # Store '.desktop' files containing "${BIN_PATH}/winux" in an array, returning an empty array if no such files exist.
-    readarray -t WINUX_DESKTOP_FILES < <(grep -l -d skip "${BIN_PATH}/winux" "${APP_PATH}/"* 2>/dev/null || true)
+    # Store '.desktop' files containing "${BIN_PATH}/winlink" in an array, returning an empty array if no such files exist.
+    readarray -t WINLINK_DESKTOP_FILES < <(grep -l -d skip "${BIN_PATH}/winlink" "${APP_PATH}/"* 2>/dev/null || true)
 
     # Remove each '.desktop' file.
-    for DESKTOP_FILE_PATH in "${WINUX_DESKTOP_FILES[@]}"; do
+    for DESKTOP_FILE_PATH in "${WINLINK_DESKTOP_FILES[@]}"; do
         # Trim leading and trailing whitespace from '.desktop' file path.
         DESKTOP_FILE_PATH=$(echo "$DESKTOP_FILE_PATH" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
 
@@ -1708,11 +1707,11 @@ function waUninstall() {
         echo -e "${DONE_TEXT}Done!${CLEAR_TEXT}"
     done
 
-    # Store the paths of bash scripts calling 'Winux' to launch specific applications in an array, returning an empty array if no such files exist.
-    readarray -t WINUX_APP_BASH_SCRIPTS < <(grep -l -d skip "${BIN_PATH}/winux" "${BIN_PATH}/"* 2>/dev/null || true)
+    # Store the paths of bash scripts calling 'WinLink' to launch specific applications in an array, returning an empty array if no such files exist.
+    readarray -t WINLINK_APP_BASH_SCRIPTS < <(grep -l -d skip "${BIN_PATH}/winlink" "${BIN_PATH}/"* 2>/dev/null || true)
 
     # Remove each bash script.
-    for BASH_SCRIPT_PATH in "${WINUX_APP_BASH_SCRIPTS[@]}"; do
+    for BASH_SCRIPT_PATH in "${WINLINK_APP_BASH_SCRIPTS[@]}"; do
         # Trim leading and trailing whitespace from bash script path.
         BASH_SCRIPT_PATH=$(echo "$BASH_SCRIPT_PATH" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
 
@@ -1730,7 +1729,7 @@ function waUninstall() {
     done
 
     # Print caveats.
-    echo -e "\n${INFO_TEXT}Please note that your Winux configuration and the Winux source code were not removed.${CLEAR_TEXT}"
+    echo -e "\n${INFO_TEXT}Please note that your WinLink configuration and the WinLink source code were not removed.${CLEAR_TEXT}"
     echo -e "${INFO_TEXT}You can remove these manually by running:${CLEAR_TEXT}"
     echo -e "${COMMAND_TEXT}rm -r $(dirname "$CONFIG_PATH")${CLEAR_TEXT}"
     echo -e "${COMMAND_TEXT}rm -r ${SOURCE_PATH}${CLEAR_TEXT}\n"
@@ -1744,7 +1743,7 @@ function waUninstall() {
 echo -e "${BOLD_TEXT}\
 ################################################################################
 #                                                                              #
-#                            Winux Install Wizard                            #
+#                            WinLink Install Wizard                            #
 #                                                                              #
 ################################################################################
 ${CLEAR_TEXT}"
@@ -1764,7 +1763,7 @@ waConfigurePathsAndPermissions
 # Get the source code
 waGetSourceCode
 
-# Install or uninstall Winux.
+# Install or uninstall WinLink.
 if [ "$OPT_UNINSTALL" -eq 1 ]; then
     waUninstall
 else
