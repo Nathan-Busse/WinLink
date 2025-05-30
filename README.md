@@ -1,6 +1,6 @@
 # WinLink
 
-Inspired by [winlink](https://github.com/Nathan-Busse/winlink)
+Inspired by [WinApps](https://github.com/Nathan-Busse/winlink)
 
 WinLink shares the same idea as winlink, but focuses on bridinging the gap between Microsoft windows appliciations and Linux , lightweight performance, and an automated, streamlined setup GUI—similar to the experience of setting up Linux distros like Raspberry Pi OS Desktop.
 
