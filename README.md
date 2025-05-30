@@ -99,15 +99,6 @@ sudo reboot
 > Check that the output of `lsmod | grep ip_tables` and `lsmod | grep iptable_nat` is non empty.
 > If the output of one of the previous command is empty, run `echo -e "ip_tables\niptable_nat" | sudo tee /etc/modules-load.d/iptables.conf` and reboot.
 
-## `Docker`
-### Installation
-You can find a guide for installing `Docker Engine` [here](https://docs.docker.com/engine/install/).
-
-### Setup `Docker` Container
-WinLink utilises `docker compose` to configure Windows VMs. A template [`compose.yaml`](../compose.yaml) is provided.
-
-Prior to installing Windows, you can modify the RAM and number of CPU cores available to the Windows VM by changing `RAM_SIZE` and `CPU_CORES` within `compose.yaml`.
-
 It is also possible to specify the version of Windows you wish to install within `compose.yaml` by modifying `VERSION`.
 
 Please refer to the [original GitHub repository](https://github.com/dockur/windows) for more information on additional configuration options.
