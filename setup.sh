@@ -156,7 +156,7 @@ function waGetSourceCode() {
     fi
 
     if [[ ! -d "$SOURCE_PATH" ]]; then
-        $SUDO git clone --recurse-submodules --remote-submodules https://github.com/Nathan-Busse/winlink.git "$SOURCE_PATH"
+        $SUDO git clone --recurse-submodules --remote-submodules https://github.com/Nathan-Busse/WinLink.git "$SOURCE_PATH"
     else
         echo -e "${INFO_TEXT}WinLink installation already present at ${CLEAR_TEXT}${COMMAND_TEXT}${SOURCE_PATH}${CLEAR_TEXT}${INFO_TEXT}. Updating...${CLEAR_TEXT}"
         $SUDO git -C "$SOURCE_PATH" pull --no-rebase
@@ -196,7 +196,7 @@ function waGetInquirer() {
         INQUIRER="/tmp/waInquirer.sh"
         rm -f "$INQUIRER"
 
-        curl -o "$INQUIRER" "https://raw.githubusercontent.com/Nathan-Busse/winlink/main/install/inquirer.sh"
+        curl -o "$INQUIRER" "https://raw.githubusercontent.com/Nathan-Busse/WinLink/main/install/inquirer.sh"
     fi
 
     # shellcheck source=/dev/null # Exclude this file from being checked by ShellCheck.
