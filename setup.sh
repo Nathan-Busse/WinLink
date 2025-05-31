@@ -196,7 +196,7 @@ function waGetInquirer() {
         INQUIRER="/tmp/waInquirer.sh"
         rm -f "$INQUIRER"
 
-        curl -o "$INQUIRER" "https://raw.githubusercontent.com/Nathan-Busse/WinLink/main/install/inquirer.sh"
+        bash -o "$INQUIRER" "install/inquirer.sh"
     fi
 
     # shellcheck source=/dev/null # Exclude this file from being checked by ShellCheck.
