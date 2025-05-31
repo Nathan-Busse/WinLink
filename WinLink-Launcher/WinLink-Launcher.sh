@@ -43,13 +43,13 @@ declare -rx MENU_RESUME="Resume!bash -c resume_windows!${ICONS_PATH}/Resume.svg"
 declare -rx MENU_HIBERNATE="Hibernate!bash -c hibernate_windows!${ICONS_PATH}/Hibernate.svg"
 
 # Other
-declare -rx VM_NAME="Winux"
-declare -rx CONTAINER_NAME="Winux"
+declare -rx VM_NAME="WinLink"
+declare -rx CONTAINER_NAME="WinLink"
 declare -rx DEFAULT_FLAVOR="docker"
 
 ### GLOBAL VARIABLES ###
 declare -x WINUX_PATH="" # Generated programmatically following dependency checks.
-declare -x WAFLAVOR=""     # As specified within the Winux configuration file.
+declare -x WAFLAVOR=""     # As specified within the WinLink configuration file.
 
 ### FUNCTIONS ###
 # Check 'x11'/'wayland' Display Server Protocol
@@ -60,18 +60,18 @@ function check_dsp() {
     fi
 }
 
-# Check Winux Configuration File Exists
+# Check WinLink Configuration File Exists
 function check_config_exists() {
     if [[ ! -f "$CONFIG_FILE" ]]; then
         # Throw an error.
-        show_error_message "ERROR: Winux configuration file <u>NOT FOUND</u>.\nPlease ensure <i>${CONFIG_FILE}</i> exists."
+        show_error_message "ERROR: WinLink configuration file <u>NOT FOUND</u>.\nPlease ensure <i>${CONFIG_FILE}</i> exists."
         exit "$EC_NO_WACONFIG"
     fi
 }
 
-# Winux Flavor Detection
+# WinLink Flavor Detection
 function winlink_flavor_detection() {
-    # Read the Winux configuration file line by line.
+    # Read the WinLink configuration file line by line.
     while IFS= read -r LINE; do
         # Check if the line begins with 'WAFLAVOR='.
         if [[ "$LINE" == WAFLAVOR=\"* ]]; then
@@ -83,14 +83,14 @@ function winlink_flavor_detection() {
     done < "$CONFIG_FILE"
 
     if [[ -z "$WAFLAVOR" ]]; then
-        # Use the default Winux flavor if it was not specified.
+        # Use the default WinLink flavor if it was not specified.
         WAFLAVOR="$DEFAULT_FLAVOR"
         echo -e "${DEBUG_TEXT}> USING DEFAULT BACKEND '${WAFLAVOR}'${RESET_TEXT}"
     else
         # Check if a valid flavor was specified.
         if [[ "$WAFLAVOR" != "docker" && "$WAFLAVOR" != "podman" && "$WAFLAVOR" != "libvirt" ]]; then
             # Throw an error.
-            show_error_message "ERROR: Specified Winux backend '${WAFLAVOR}' <u>INVALID</u>.\nPlease ensure 'WAFLAVOR' is set to \"docker\", \"podman\" or \"libvirt\" within <i>${CONFIG_FILE}</i>."
+            show_error_message "ERROR: Specified WinLink backend '${WAFLAVOR}' <u>INVALID</u>.\nPlease ensure 'WAFLAVOR' is set to \"docker\", \"podman\" or \"libvirt\" within <i>${CONFIG_FILE}</i>."
             exit "$EC_BAD_BACKEND"
         fi
     fi
@@ -170,7 +170,7 @@ function show_error_message() {
         --borders=15 \
         --window-icon=dialog-error \
         --selectable-labels \
-        --title="Winux Launcher" \
+        --title="WinLink Launcher" \
         --image=dialog-error \
         --text="$MESSAGE" \
         --button=yad-ok:0 \
@@ -200,11 +200,11 @@ function app_select() {
 
                 # Store the application name.
                 if [ -f "${USER_WINUX_APPLICATIONS}/${FILENAME}/info" ]; then
-                    # Winux 'User' Installation.
+                    # WinLink 'User' Installation.
                     # Identify the 'FULL_NAME' line and extract the string within double quotes.
                     APPNAME=$(grep '^FULL_NAME=' "${USER_WINUX_APPLICATIONS}/${FILENAME}/info" | sed 's/^FULL_NAME="//;s/"$//')
                 elif [ -f "${SYSTEM_WINUX_APPLICATIONS}/${FILENAME}/info" ]; then
-                    # Winux 'System' Installation.
+                    # WinLink 'System' Installation.
                     # Identify the 'FULL_NAME' line and extract the string within double quotes.
                     APPNAME=$(grep '^FULL_NAME=' "${SYSTEM_WINUX_APPLICATIONS}/${FILENAME}/info" | sed 's/^FULL_NAME="//;s/"$//')
                 else
@@ -233,7 +233,7 @@ function app_select() {
 
         # Display application selection popup window.
         SELECTED_APP=$(echo -e "$SORTED_APP_STRING" | yad --list \
-        --title="Winux Launcher" \
+        --title="WinLink Launcher" \
         --width=300 \
         --height=500 \
         --text="Select Windows Application to Launch:" \
@@ -284,13 +284,13 @@ function check_windows_exists() {
             exit "$EC_NO_WIN_FOUND"
         fi
     elif [[ $WAFLAVOR == "podman" ]]; then
-        if ! podman ps --all --filter name="Winux" | grep -q "$CONTAINER_NAME"; then
+        if ! podman ps --all --filter name="WinLink" | grep -q "$CONTAINER_NAME"; then
             # Not Found
             show_error_message "ERROR: Podman container '${CONTAINER_NAME}' <u>NOT FOUND</u>.\nPlease ensure <i>'${CONTAINER_NAME}'</i> exists."
             exit "$EC_NO_WIN_FOUND"
         fi
     elif [[ $WAFLAVOR == "docker" ]]; then
-        if ! docker ps --all --filter name="Winux" | grep -q "$CONTAINER_NAME"; then
+        if ! docker ps --all --filter name="WinLink" | grep -q "$CONTAINER_NAME"; then
             # Not Found
             show_error_message "ERROR: Docker container '${CONTAINER_NAME}' <u>NOT FOUND</u>.\nPlease ensure <i>'${CONTAINER_NAME}'</i> exists."
             exit "$EC_NO_WIN_FOUND"
@@ -697,6 +697,6 @@ generate_menu
 yad --notification \
     --listen \
     --no-middle \
-    --text="Winux Launcher" \
+    --text="WinLink Launcher" \
     --image="${ICONS_PATH}/AppIcon.svg" \
     --command="menu" <&3
