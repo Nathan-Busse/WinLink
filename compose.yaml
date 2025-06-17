@@ -53,13 +53,14 @@ services:
       - /dev/bus/usb/001/008 # Uncomment to enable USB passthrough for the host's USB controller. Adjust the path as needed.
 #      - /dev/bus/usb/001/009 # Uncomment to enable USB passthrough for the host's USB controller. Adjust the path as needed.
 #      - /dev/bus/usb/001/010 # Uncomment to enable USB passthrough for the host's USB controller. Adjust the path as needed.
-      - /dev/bus/usb/001/011 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
-      - /dev/bus/usb/001/012 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
-      - /dev/bus/usb/001/013 # Uncomment to enable USB passthhrough for a specific USB device. Adjust the path as needed.
-      - /dev/bus/usb/001/014 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
-      - /dev/bus/usb/001/015 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.  
-      - /dev/bus/usb/001/016 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
+#      - /dev/bus/usb/001/011 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
+#      - /dev/bus/usb/001/012 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
+#      - /dev/bus/usb/001/013 # Uncomment to enable USB passthhrough for a specific USB device. Adjust the path as needed.
+#      - /dev/bus/usb/001/014 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
+#      - /dev/bus/usb/001/015 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.  
+#      - /dev/bus/usb/001/016 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
       - /dev/bus/usb/001/017 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
+      - /dev/bus/usb/001/018 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
       - /dev/bus/usb/002/001 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
 
       #- /dev/bus/usb/002/002 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
