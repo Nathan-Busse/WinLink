@@ -39,6 +39,35 @@ services:
     devices:
       - /dev/kvm # Enable KVM.
       - /dev/net/tun # Enable tuntap
+
+      # Uncomment the following lines to enable USB passthrough for specific USB devices.
+      #------------------------------------------------------------------------------------------------------------------------------------------
+      
+      - /dev/bus/usb/001/001 # Uncomment to enable USB passthrough for the host's USB controller. Adjust the path as needed.
+      - /dev/bus/usb/001/002 # Uncomment to enable USB passthrough for the host's USB controller. Adjust the path as needed.
+#      - /dev/bus/usb/001/003 # Uncomment to enable USB passthrough for the host's USB controller. Adjust the path as needed.
+      - /dev/bus/usb/001/004 # Uncomment to enable USB passthrough for the host's USB controller. Adjust the path as needed.
+      - /dev/bus/usb/001/005 # Uncomment to enable USB passthrough for the host's USB controller. Adjust the path as needed.
+      - /dev/bus/usb/001/006 # Uncomment to enable USB passthrough for the host's USB controller. Adjust the path as needed.
+#      - /dev/bus/usb/001/007 # Uncomment to enable USB passthrough for the host's USB controller. Adjust the path as needed.
+      - /dev/bus/usb/001/008 # Uncomment to enable USB passthrough for the host's USB controller. Adjust the path as needed.
+      - /dev/bus/usb/001/009 # Uncomment to enable USB passthrough for the host's USB controller. Adjust the path as needed.
+      - /dev/bus/usb/001/010 # Uncomment to enable USB passthrough for the host's USB controller. Adjust the path as needed.
+      - /dev/bus/usb/001/011 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
+      - /dev/bus/usb/002/001 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
+
+      #- /dev/bus/usb/002/002 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
+      #- /dev/bus/usb/002/003 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
+      #- /dev/bus/usb/002/004 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed 
+      #- /dev/bus/usb/002/005 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
+      #- /dev/bus/usb/002/006 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
+      #- /dev/bus/usb/002/007 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
+      #- /dev/bus/usb/002/008 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
+      #- /dev/bus/usb/002/009 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
+      #- /dev/bus/usb/002/010 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
+      #- /dev/bus/usb/002/011 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.    
+
+
       #- /dev/sdX:/disk1 # Uncomment to mount a disk directly within the Windows VM (Note: 'disk1' will be mounted as the main drive. THIS DISK WILL BE FORMATTED BY DOCKER).
       #- /dev/sdY:/disk2 # Uncomment to mount a disk directly within the Windows VM (Note: 'disk2' and higher will be mounted as secondary drives. THIS DISK WILL NOT BE FORMATTED).
     #group_add:      # uncomment this line and the next one for using rootless podman containers
