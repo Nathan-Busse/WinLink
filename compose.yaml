@@ -51,7 +51,7 @@ services:
       - /dev/bus/usb/001/006 # Uncomment to enable USB passthrough for the host's USB controller. Adjust the path as needed.
 #      - /dev/bus/usb/001/007 # Uncomment to enable USB passthrough for the host's USB controller. Adjust the path as needed.
       - /dev/bus/usb/001/008 # Uncomment to enable USB passthrough for the host's USB controller. Adjust the path as needed.
-      - /dev/bus/usb/001/009 # Uncomment to enable USB passthrough for the host's USB controller. Adjust the path as needed.
+#      - /dev/bus/usb/001/009 # Uncomment to enable USB passthrough for the host's USB controller. Adjust the path as needed.
       - /dev/bus/usb/001/010 # Uncomment to enable USB passthrough for the host's USB controller. Adjust the path as needed.
       - /dev/bus/usb/001/011 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
       - /dev/bus/usb/002/001 # Uncomment to enable USB passthrough for a specific USB device. Adjust the path as needed.
