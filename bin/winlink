@@ -19,29 +19,29 @@ readonly EC_UNSUPPORTED_APP=14
 readonly EC_INVALID_FLAVOR=15
 
 # PATHS
-readonly APPDATA_PATH="${HOME}/.local/share/winlink"
-readonly SYS_APP_PATH="/usr/local/share/winlink"
+readonly APPDATA_PATH="${HOME}/.local/share/WinLink"
+readonly SYS_APP_PATH="/usr/local/share/WinLink"
 readonly LASTRUN_PATH="${APPDATA_PATH}/lastrun"
 readonly LOG_PATH="${APPDATA_PATH}/winlink.log"
-readonly CONFIG_PATH="${HOME}/.config/winlink/winlink.conf"
-readonly COMPOSE_PATH="${HOME}/.config/winlink/compose.yaml"
+readonly CONFIG_PATH="${HOME}/.config/WinLink/winlink.conf"
+readonly COMPOSE_PATH="${HOME}/.config/WinLink/compose.yaml"
 # shellcheck disable=SC2155 # Silence warnings regarding masking return values through simultaneous declaration and assignment.
 readonly SCRIPT_DIR_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
 # OTHER
-readonly CONTAINER_NAME="Winux" # FOR 'docker' AND 'podman' ONLY
+readonly CONTAINER_NAME="WinLink" # FOR 'docker' AND 'podman' ONLY
 readonly RDP_PORT=3389
 readonly DOCKER_IP="127.0.0.1"
 # shellcheck disable=SC2155 # Silence warnings regarding masking return values through simultaneous declaration and assignment.
 readonly RUNID="${RANDOM}"
 
 ### GLOBAL VARIABLES ###
-# WINUX CONFIGURATION FILE
-RDP_USER=""
-RDP_PASS=""
+# WinLink CONFIGURATION FILE
+RDP_USER="admin"
+RDP_PASS="admin"
 RDP_DOMAIN=""
 RDP_IP=""
-VM_NAME="RDPWindows" # FOR 'libvirt' ONLY
+VM_NAME="WinLink" # FOR 'libvirt' ONLY
 WAFLAVOR="docker"
 RDP_FLAGS=""
 FREERDP_COMMAND=""
